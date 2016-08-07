@@ -1,0 +1,30 @@
+{
+  "name": "shanhu",
+  "description": "first",
+  "main": "app.js",
+  "authors": [
+    "CreatorZ"
+  ],
+  "license": "ISC",
+  "keywords": [
+    "餐饮"
+  ],
+  "homepage": "",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "public/lib",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "react": "^15.1.0",
+    "jquery": "^3.0.0",
+    "underscore": "^1.8.3",
+    "bootstrap": "^3.3.6",
+    "oauth": "^0.9.0",
+    "js-md5": "md5#^0.4.1",
+    "jquery-form": "^3.46.0"
+  }
+}

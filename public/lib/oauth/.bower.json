@@ -1,0 +1,15 @@
+{
+  "name": "oauth",
+  "homepage": "https://github.com/sladey/node-oauth",
+  "version": "0.9.0",
+  "_release": "0.9.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.9.0",
+    "commit": "13d9420c94087ac4f63a1437a54e1e4912af6214"
+  },
+  "_source": "https://github.com/sladey/node-oauth.git",
+  "_target": "^0.9.0",
+  "_originalSource": "oauth",
+  "_direct": true
+}
