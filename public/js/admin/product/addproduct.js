@@ -23,7 +23,11 @@ function initPage(){
     // 选择分类
     $.get('/admin/checkClassify').done(function(res){
         if(res.code == 0){
-            var classifyList = [];
+            var classifyList = [{
+                id: 0,
+                text: "产品分类",
+                value: 'classify-default'
+            }];
             _.each(res.data, function(item){
                 classifyList.push({
                     id: item._id,
@@ -35,6 +39,16 @@ function initPage(){
                 data: classifyList
             })
         }
+    });
+    // 
+    // 
+    $(".add-product").on("click", function(){
+        // 组装数据
+        var productName = $(".product-name");
+        var productClassifyName = $();
+        var productClassifyId = $();
+        var productPrice = $();
+
     })
 }
 

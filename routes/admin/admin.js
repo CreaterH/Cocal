@@ -24,7 +24,6 @@ router.post('/addClassify', function(req, res) {
 });
 
 router.get("/checkClassify", function(req, res) {
-    // console.log(req);
     var data = {};
     manage.product.checkClassify(req, res, data);
 });
@@ -37,7 +36,13 @@ router.post("/delClassify", function(req, res) {
      * 商品列表相关接口
      */
 router.post('/addProduct', function(req, res) {
-
+    var data = {
+        name: "",
+        classify: "",
+        price: "",
+        describe: "",
+    }
+    
 });
 
 router.post('/addProduct/image', function(req, res) {
