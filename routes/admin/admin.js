@@ -29,9 +29,9 @@ router.get("/checkClassify", function(req, res) {
 });
 
 router.post("/delClassify", function(req, res) {
-        var data = JSON.parse(req.body.delClassItems);
-        manage.product.deleteClassify(req, res, data);
-    })
+    var data = JSON.parse(req.body.delClassItems);
+    manage.product.deleteClassify(req, res, data);
+})
     /**
      * 商品列表相关接口
      */
@@ -41,8 +41,8 @@ router.post('/addProduct', function(req, res) {
         classify: "",
         price: "",
         describe: "",
-    }
-    
+    };
+    manage.product.addProduct(req, res, data);
 });
 
 router.post('/addProduct/image', function(req, res) {
@@ -74,7 +74,6 @@ router.post('/file/uploading', function(req, res, next) {
     //上传完成后处理
     form.parse(req, function(err, fields, files) {
         var filesTmp = JSON.stringify(files, null, 2);
-
         if (err) {
             console.log('parse error: ' + err);
         } else {

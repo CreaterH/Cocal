@@ -13,7 +13,9 @@ var config = {
         new webpack.ProvidePlugin({
             $: 'jquery',
             jQuery: 'jquery',
-            _: 'underscore'
+            _: 'underscore',
+            "window.jQuery": 'jquery',
+            "window.$": 'jquery'
         })
     ],
 
@@ -51,7 +53,9 @@ var config = {
             'bootbox': context + 'js/lib/bootbox.js/bootbox',
             'piny-dialog': context + 'js/widget/dialog',
             'tpl': context + 'js/tpl',
-            'widget': context + 'js/widget'
+            'widget': context + 'js/widget',
+            'piny-notify': context + 'js/lib/bootstrap-notify/js/bootstrap-notify',
+            'Dropzone': context + '/css/vendor/plugins/dropzone/dropzone.min'
         },
         extensions: ['', '.js', '.html', '.jsx', '.json', '.ejs']
     },

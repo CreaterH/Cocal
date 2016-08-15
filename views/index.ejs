@@ -24,12 +24,12 @@
         <div id="header_fixed" class="header_fixed">
             <div class="headbar">
                 <div class="layout clearfix">
-                    <ul id="userbar" class="userbar login_before">
+                    <!-- <ul id="userbar" class="userbar login_before">
                         <li><a href="http://www.ininin.com/help/index.html" title="帮助中心">帮助中心</a></li>
                         <li class="vline"></li>
                         <li><a href="http://www.ininin.com/help/feedback.html" title="意见反馈" target="_blank">意见反馈</a></li>
-                    </ul>
-                    <div id="template_delivery_region_view" class="mod_selectbox_head">
+                    </ul> -->
+                    <!-- <div id="template_delivery_region_view" class="mod_selectbox_head">
                         <script id="template_delivery_region" type="text/template">
                             <div class="mod_selectbox" id="delivery_region" data-mode="0">
                                 <div class="input_btn">
@@ -49,7 +49,7 @@
                                 </div>
                             </div>
                         </script>
-                    </div>
+                    </div> -->
                     <div class="topbar">
                         <span class="introduce">您好，欢迎光临珊瑚茶歇！</span><span class="head_tel"></span>
                     </div>
@@ -58,12 +58,12 @@
         </div>
         <div class="layout clearfix">
             <div class="head_logo clearfix">
-                <!-- <a href="http://www.ininin.com/" target="_blank" class="logo" title="云印官网—让印刷更省心，让设计更简单！"><img src="http://www.ininin.com/resources/logo.png" alt="云印技术" title="云印技术"></a> -->
+                <!-- <a href="http://www.ininin.com/" target="_blank" class="logo" title=""><img src="http://www.ininin.com/resources/logo.png" alt="珊瑚茶歇" title="珊瑚茶歇"></a> -->
                 <div class="head_shop">
                     <dl class="cartbtn">
-                        <dt class="dt"><a id="user_cart" onclick="_czc.push(['_trackEvent', '顶部', '购物车按钮', '','','user_cart']);" href="http://www.ininin.com/cart/index.html" class="cart_login"><b id="car_number">购物车</b></a></dt>
+                        <dt class="dt"><a id="user_cart" href="http://www.ininin.com/cart/index.html" class="cart_login"><b id="car_number">购物车</b></a></dt>
                         <dd id="template_cart_snap_view" class="cart_snap">
-                            <div class="alt">您购物车暂时还没有任何商品，<a onclick="_czc.push(['_trackEvent', '顶部', '马上去选购', '','','']);" href="http://www.ininin.com/">马上去选购～</a></div>
+                            <div class="alt">您购物车暂时还没有任何商品，<a href="/">马上去选购～</a></div>
                         </dd>
                     </dl>
                 </div>
@@ -75,18 +75,11 @@
                     </div>
                     <div class="commend-keys">
                         <a data-url="http://www.ininin.com/search.html#keyword=扇子&amp;type=2" href="javascript:;">扇子</a>
-                        <a data-url="http://www.ininin.com/search.html#keyword=高光相纸海报&amp;type=2" href="javascript:;">高光相纸海报</a>
-                        <a data-url="http://www.ininin.com/search.html#keyword=照片冲印&amp;type=2" href="javascript:;">照片冲印</a>
-                        <a data-url="http://www.ininin.com/search.html#keyword=定制折页&amp;type=2" href="javascript:;">定制折页</a>
-                        <a data-url="http://www.ininin.com/search.html#keyword=不干胶&amp;type=2" href="javascript:;">不干胶</a>
-                        <a data-url="http://www.ininin.com/search.html#keyword=展架&amp;type=2" href="javascript:;">展架</a>
-                        <a data-url="http://www.ininin.com/search.html#keyword=纸杯&amp;type=2" href="javascript:;">纸杯</a>
-                        <a data-url="http://www.ininin.com/search.html#keyword=鼠标垫&amp;type=2" href="javascript:;">鼠标垫</a>
                     </div>
                 </div>
             </div>
             <div id="menu" class="menu clearfix">
-                <div class="all_sort"><a href="http://www.ininin.com/all.html" class="all_pro">全部商品分类</a>
+                <div class="all_sort"><a href="#" class="all_pro">全部商品分类</a>
                     <div id="nav_category" class="nav_category">
                         <ul id="template-nav_category_list-view" class="nav_category_list">
                             <li class="nav_category_item">
@@ -117,60 +110,13 @@
                                 <a href="javascript:;" class="nav_category_content">名片</a>
                             </li>
                         </ul>
-                        <script id="template-nav_category_list" type="text/template">
-                            {{each categoryList as category i}}
-                            <li class="nav_category_item">
-                                <div class="children_list">
-                                    {{if category.categorys && category.categorys.length}}
-                                    <div class="subitems">
-                                        {{each category.categorys as item j}}
-                                        <dl class="fore1">
-                                            <dt>
-                                                {{if category.categoryType!='design'}}
-                                                <a href="http://www.ininin.com/search.html#keyword={{item.categoryName}}&type=6" title="{{item.categoryName}}" target="_blank">{{item.categoryName}}</a>
-                                                {{else}}
-                                                {{item.categoryName}}
-                                                {{/if}}
-                                            </dt>
-                                            <dd>
-                                                {{each item.products as o k}} {{if o.productId && o.targetId>0 && o.productId!=o.targetId}}
-                                                <a href="http://www.ininin.com/product/{{o.targetId}}?pid={{o.productId}}" title="{{o.productName}}" target="_blank">{{o.productName}}</a>&nbsp; {{else if o.productId}}
-                                                <a href="http://www.ininin.com/product/{{o.productId}}.html" title="{{o.productName}}" target="_blank">{{o.productName}}</a>&nbsp; {{/if}} {{/each}} {{each item.categorys as o k}} {{if o.categoryId}} {{if
-                                                category.categoryType=='design'}}
-                                                <a href="http://design.ininin.com/category/{{o.categoryId}}.html" title="{{o.categoryName}}" target="_blank">{{o.categoryName}}</a>&nbsp; {{else}}
-                                                <a href="http://www.ininin.com/search.html#keyword={{o.categoryName}}&type=7" title="{{o.categoryName}}" target="_blank">{{o.categoryName}}</a>&nbsp; {{/if}} {{/if}} {{/each}}
-                                            </dd>
-                                        </dl>
-                                        {{/each}}
-                                    </div>
-                                    {{/if}} {{if category.pics && category.pics.length}}
-                                    <ul class="imgs">
-                                        {{each category.pics as o k}}
-                                        <li>
-                                            <a href="{{o.picHref}}" title="{{o.title}}" target="_blank">
-                                                <img class="img-loaded" src="{{o.picPath}}" alt="{{o.title}}">
-                                            </a>&nbsp;
-                                        </li>
-                                        {{/each}}
-                                    </ul>
-                                    {{/if}}
-                                </div>
-                                <a href="javascript:;" class="nav_category_content">
-                                    {{category.categoryName}}
-                                    {{if !category.categoryId}}
-                                    <img src="http://www.ininin.com/resources/icons/new.gif"/>
-                                    {{/if}}
-                                </a>
-                            </li>
-                            {{/each}}
-                        </script>
                     </div>
                 </div>
                 <div id="nav" class="nav">
                     <ul class="nav_main clearfix">
                         <li class="nav_new_card col-1">
                             <a class="more" href="http://www.ininin.com/new/index.html">云印优品</a>
-                            <ul class="new_card_more">
+<!--                             <ul class="new_card_more">
                                 <li><a href="http://www.ininin.com/new/index.html" class="new_all">全部优品</a></li>
                                 <li><a href="http://www.ininin.com/new/200021.html" class="new_card">新名片</a></li>
                                 <li><a href="http://www.ininin.com/new/200032.html" class="new_page">新单页</a></li>
@@ -180,7 +126,7 @@
                                 <li><a href="http://www.ininin.com/new/200068.html" class="new_album">新画册</a></li>
                                 <li><a href="http://www.ininin.com/new/200069.html" class="new_reticule">新手提袋</a></li>
                                 <li><a href="http://www.ininin.com/new/200070.html" class="new_coupon">新优惠券</a></li>
-                            </ul>
+                            </ul> -->
                         </li>
                         <li class="col-2"><a href="http://www.ininin.com/product/index.html">印刷产品</a></li>
                         <li class="col-3"><a href="http://design.ininin.com/">设计服务<img src="http://www.ininin.com/resources/icons/new.gif"></a></li>
@@ -188,7 +134,7 @@
                         <li class="col-5"><a href="http://www.ininin.com/stationery/index.html">办公用品</a></li>
                         <li class="nav_scene_ways col-6">
                             <a class="more" href="http://www.ininin.com/solution/index.html">场景解决方案</a>
-                            <ul class="new_card_more">
+                            <!-- <ul class="new_card_more">
                                 <li><a href="http://www.ininin.com/solution/index.html" class="new_all">全部场景</a></li>
                                 <li><a href="http://www.ininin.com/solution/exhibition.html" class="exhibiteneed">展会必备</a></li>
                                 <li><a href="http://www.ininin.com/solution/dailyoffice.html" class="dailywork">日常办公</a></li>
@@ -196,7 +142,7 @@
                                 <li><a href="http://www.ininin.com/solution/store_suit.html" class="storeset">门店套装</a></li>
                                 <li><a href="http://www.ininin.com/solution/push_suit.html" class="marketingset">地推套装</a></li>
                                 <li><a href="http://www.ininin.com/solution/festival.html" class="festival">门店节日</a></li>
-                            </ul>
+                            </ul> -->
                         </li>
                         <li class="item_last col-7"><a href="http://www.ininin.com/integral/index.html">积分商城</a></li>
                     </ul>
@@ -1670,11 +1616,11 @@
             <a href="javascript:;" class="">精品推荐</a>
         </li>
     </ul>
-    <script type="text/javascript" src="/js/lib/jquery/dist/jquery.js"></script>
+<!--     <script type="text/javascript" src="/js/lib/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="/js/tools.js"></script>
     <script type="text/javascript" src="/js/index_new.js"></script>
     <script type="text/javascript" src="/js/location.js"></script>
     <script type="text/javascript" src="/js/loaded.js"></script>
-    <script type="text/javascript" src="/js/link-login.js"></script>
+    <script type="text/javascript" src="/js/link-login.js"></script> -->
 </body>
 </html>

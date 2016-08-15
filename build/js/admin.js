@@ -55,7 +55,7 @@ webpackJsonp([0,1],[
 	            })
 	        },
 	        '!/product/list': function(){
-	            var list = __webpack_require__(18);
+	            var list = __webpack_require__(21);
 	            list.render({
 	                container: '#content_container',
 	            });
@@ -81,7 +81,7 @@ webpackJsonp([0,1],[
 
 	var init = function(){
 
-	    var Router = __webpack_require__(20);
+	    var Router = __webpack_require__(23);
 
 	    Router();
 
@@ -30518,6 +30518,10 @@ webpackJsonp([0,1],[
 
 	/* WEBPACK VAR INJECTION */(function(_, $) {var addProductTpl = __webpack_require__(16);
 	__webpack_require__(17);
+	__webpack_require__(18);
+	__webpack_require__(19);
+	var Dropzone = __webpack_require__(20);
+
 	var _opts;
 
 	function render(opts){
@@ -30562,11 +30566,29 @@ webpackJsonp([0,1],[
 	    // 
 	    $(".add-product").on("click", function(){
 	        // 组装数据
-	        var productName = $(".product-name");
-	        var productClassifyName = $();
-	        var productClassifyId = $();
-	        var productPrice = $();
+	        // var productName = $(".product-name");
+	        // var productClassifyName = $();
+	        // var productClassifyId = $();
+	        // var productPrice = $();
 
+	        var options = {
+	            type: "post",
+	            url: "/admin/addproduct",
+	            data: {
+	                productName: "123",//productName,
+	            },
+	            success: function(res){
+	                if(res.code == 0){
+	                    $(".notifications").notify({
+	                        message: {
+	                            text: "保存成功！",
+
+	                        }
+	                    }).show();
+	                }
+	            }
+	        }
+	        $("#addproduct-form").ajaxSubmit(options);
 	    })
 	}
 
@@ -30577,6 +30599,51 @@ webpackJsonp([0,1],[
 	    // 清空数据
 	    $("#delete").on("click", function(){})
 	}
+	    Dropzone.options.dropZone = {
+	      paramName: "file", 
+	      maxFilesize: 0,
+
+	      addRemoveLinks: true,
+	      dictDefaultMessage: '<i class="fa fa-cloud-upload"></i> \
+	         <span class="main-text"><b>Drop Files</b> to upload</span> <br /> \
+	         <span class="sub-text">(or click)</span> \
+	        ',
+	      dictResponseError: 'Server not Configured'
+	    };
+
+	    Dropzone.options.dropZone2 = {
+	      paramName: "file", 
+	      maxFilesize: 0,
+
+	      addRemoveLinks: true,
+	      dictDefaultMessage: '<i class="fa fa-cloud-upload"></i> \
+	         <span class="main-text"><b>Drop Files</b> to upload</span> <br /> \
+	         <span class="sub-text">(or click)</span> \
+	        ',
+	      dictResponseError: 'Server not Configured'
+	    };
+	    setTimeout(function() {
+	      var Drop = $('#dropZone2');
+	      Drop.addClass('dz-started dz-demo');
+
+	      setTimeout(function() {
+	        $('.example-preview').each(function(i, e) {
+	          var This = $(e);
+
+	          var thumbOut = setTimeout(function() {
+	            Drop.append(This);
+	            This.addClass('animated fadeInRight').removeClass('hidden');
+	          }, i * 135);
+
+	        });
+	      }, 750);
+
+	    }, 800);
+
+	    // Demo code 
+	    $('.example-preview').on('click', 'a.dz-remove', function() {
+	      $(this).parent('.example-preview').remove();
+	    });
 
 	module.exports = {
 	    render: render
@@ -30587,7 +30654,7 @@ webpackJsonp([0,1],[
 /* 16 */
 /***/ function(module, exports) {
 
-	module.exports = "\n<style type=\"text/css\">\n.affix{\n    top:60px;\n}\n.header-title{\n    position: absolute;\n    left:200px;\n    right:200px;\n    top:0;\n    bottom:0;\n    text-align: center;\n    line-height: 50px;\n    font-size:20px;\n}    \n</style>\n<!-- Start: Topbar -->\n<header id=\"topbar\" class=\"ph10 affix\">\n    <div class=\"topbar-left\">\n        <ul class=\"nav nav-list nav-list-topbar pull-left\">\n            <li>\n                <a href=\"#!/product/classify\"><span class=\"fa fa-angle-left\"></span>返回</a>\n            </li>\n        </ul>\n    </div>\n    <div class=\"header-title\"></div>\n    <div class=\"topbar-right hidden-xs hidden-sm\">\n        <a href=\"#!/product/list/add\" id=\"save-top\" class=\"btn btn-default btn-sm fw600 ml10 add-product\">\n            <span class=\"fa fa-plus pr5\"></span>保存\n        </a>\n        <a href=\"javascript:;\" id=\"clean-input\" class=\"btn btn-default btn-sm fw600 ml10\">\n            <span class=\"fa fa-minus pr5\"></span>清空\n        </a>\n\n    </div>\n</header>\n<!-- End: Topbar -->\n\n<!-- Begin: Content -->\n<div id=\"content\" class=\"animated fadeIn\">\n<!-- create new order panel -->\n  <div class=\"panel mb25 mt5\">\n    <div class=\"panel-heading\">\n      <span class=\"panel-title hidden-xs\">新增商品</span>\n    </div>\n    <div class=\"panel-body p20 pb10\">\n      <div class=\"tab-content pn br-n admin-form\">\n          <div class=\"section row\">\n            <div class=\"col-md-6\">\n              <label for=\"product-name\" class=\"field prepend-icon\">\n                <input type=\"text\" name=\"product-name\" id=\"product-name\" class=\"gui-input\" placeholder=\"产品名称\">\n                <label for=\"product-price\" class=\"field-icon\">\n                  <i class=\"fa fa-leaf\"></i>\n                </label>\n              </label>\n            </div>\n            <!-- end section -->\n\n            <div class=\"col-md-6\">\n              <label class=\"field select\">\n                <select id=\"product-classify\" name=\"product-status\"></select>\n                <i class=\"arrow double\"></i>\n              </label>\n            </div>\n            <!-- end section -->\n\n          </div>\n          <!-- end section row section -->\n\n          <div class=\"section row\">\n            <div class=\"col-md-4\">\n              <label for=\"product-price\" class=\"field prepend-icon\">\n                <input type=\"text\" name=\"product-price\" id=\"product-price\" class=\"gui-input\" placeholder=\"产品价格\">\n                <label for=\"product-price\" class=\"field-icon\">\n                  <i class=\"fa fa-cny\"></i>\n                </label>\n              </label>\n            </div>\n            <!-- end section -->\n\n            <div class=\"col-md-4\">\n              <label for=\"product-vendor\" class=\"field prepend-icon\">\n                <input type=\"text\" name=\"product-vendor\" id=\"product-vendor\" class=\"gui-input\" placeholder=\"\">\n                <label for=\"product-vendor\" class=\"field-icon\">\n                  <i class=\"fa fa-shopping-cart\"></i>\n                </label>\n              </label>\n            </div>\n            <!-- end section -->\n\n            <div class=\"col-md-4\">\n              <label for=\"product-sku\" class=\"field prepend-icon\">\n                <input type=\"text\" name=\"product-sku\" id=\"product-sku\" class=\"gui-input\" placeholder=\"\">\n                <label for=\"product-sku\" class=\"field-icon\">\n                  <i class=\"fa fa-barcode\"></i>\n                </label>\n              </label>\n            </div>\n            <!-- end section -->\n          </div>\n\n          <hr class=\"short alt\">\n          \n          <div class=\"section row mbn\">\n            <div class=\"col-md-4\">\n              <div class=\"fileupload fileupload-new admin-form\" data-provides=\"fileupload\">\n                <div class=\"fileupload-preview thumbnail mb20\">\n                  <img data-src=\"\" alt=\"holder\">\n                </div>\n                <div class=\"row\">\n                  <div class=\"col-xs-7 pr5\">\n                    <input type=\"text\" name=\"name2\" id=\"name2\" class=\"text-center event-name gui-input br-light bg-light\" placeholder=\"关键字\">\n                    <label for=\"name2\" class=\"field-icon\"></label>\n                  </div>\n                  <div class=\"col-xs-5\">\n                    <span class=\"button btn-system btn-file btn-block\">\n                      <span class=\"fileupload-new\">选择</span>\n                      <span class=\"fileupload-exists\">更改</span>\n                      <input type=\"file\">\n                    </span>\n                  </div>\n                </div>\n              </div>\n            </div>\n            <div class=\"col-md-8 pl15\">\n              <div class=\"section mb10\">\n                <label class=\"field prepend-icon\">\n                  <textarea style=\"height: 160px;\" class=\"gui-textarea br-light bg-light\" id=\"comment\" name=\"comment\" placeholder=\"商品描述\"></textarea>\n                  <label for=\"comment\" class=\"field-icon\">\n                    <i class=\"fa fa-comments\"></i>\n                  </label>\n<!--                   <span class=\"input-footer \">\n                    <strong>Hint:</strong>Don't be negative or off topic! just be awesome...</span> -->\n                </label>\n              </div>\n            </div>\n          </div>\n          <div class=\"section row mbn\">\n            <div class=\"col-sm-8\">\n            </div>\n            <div class=\"col-sm-4\">\n              <p class=\"text-right\">\n                <button class=\"btn btn-primary add-product\" type=\"button\" id=\"save-bottom\">保存</button>\n              </p>\n            </div>\n          </div>\n          <!-- end section -->\n        </div>\n    </div>\n  </div>\n\n</div>\n<!-- End: Content -->";
+	module.exports = "\n<style type=\"text/css\">\n.affix{\n    top:60px;\n}\n.header-title{\n    position: absolute;\n    left:200px;\n    right:200px;\n    top:0;\n    bottom:0;\n    text-align: center;\n    line-height: 50px;\n    font-size:20px;\n}    \n</style>\n<!-- Start: Topbar -->\n<header id=\"topbar\" class=\"ph10 affix\">\n    <div class=\"topbar-left\">\n        <ul class=\"nav nav-list nav-list-topbar pull-left\">\n            <li>\n                <a href=\"#!/product/list\"><span class=\"fa fa-angle-left\">&nbsp;</span>返回</a>\n            </li>\n        </ul>\n    </div>\n    <div class=\"header-title\"></div>\n    <div class=\"topbar-right hidden-xs hidden-sm\">\n        <a href=\"#!/product/list/add\" id=\"save-top\" class=\"btn btn-default btn-sm fw600 ml10 add-product\">\n            <span class=\"fa fa-plus pr5\"></span>保存\n        </a>\n        <a href=\"javascript:;\" id=\"clean-input\" class=\"btn btn-default btn-sm fw600 ml10\">\n            <span class=\"fa fa-minus pr5\"></span>清空\n        </a>\n\n    </div>\n</header>\n<!-- End: Topbar -->\n\n<!-- Begin: Content -->\n<div id=\"content\" class=\"animated fadeIn\">\n<!-- create new order panel -->\n  <div class=\"panel mb25 mt5\">\n    <div class=\"panel-heading\">\n      <span class=\"panel-title hidden-xs\">新增商品</span>\n    </div>\n    <form id=\"addproduct-form\">\n    <div class=\"panel-body p20 pb10\">\n      <div class=\"tab-content pn br-n admin-form\">\n          <div class=\"section row\">\n            <div class=\"col-md-6\">\n              <label for=\"product-name\" class=\"field prepend-icon\">\n                <input type=\"text\" name=\"product-name\" id=\"product-name\" class=\"gui-input\" placeholder=\"产品名称\">\n                <label for=\"product-price\" class=\"field-icon\">\n                  <i class=\"fa fa-leaf\"></i>\n                </label>\n              </label>\n            </div>\n            <!-- end section -->\n\n            <div class=\"col-md-6\">\n              <label class=\"field select\">\n                <select id=\"product-classify\" name=\"product-status\"></select>\n                <i class=\"arrow double\"></i>\n              </label>\n            </div>\n            <!-- end section -->\n\n          </div>\n          <!-- end section row section -->\n\n          <div class=\"section row\">\n            <div class=\"col-md-4\">\n              <label for=\"product-price\" class=\"field prepend-icon\">\n                <input type=\"text\" name=\"product-price\" id=\"product-price\" class=\"gui-input\" placeholder=\"产品价格\">\n                <label for=\"product-price\" class=\"field-icon\">\n                  <i class=\"fa fa-cny\"></i>\n                </label>\n              </label>\n            </div>\n            <!-- end section -->\n\n            <div class=\"col-md-4\">\n              <label for=\"product-vendor\" class=\"field prepend-icon\">\n                <input type=\"text\" name=\"product-vendor\" id=\"product-vendor\" class=\"gui-input\" placeholder=\"\">\n                <label for=\"product-vendor\" class=\"field-icon\">\n                  <i class=\"fa fa-shopping-cart\"></i>\n                </label>\n              </label>\n            </div>\n            <!-- end section -->\n\n            <div class=\"col-md-4\">\n              <label for=\"product-sku\" class=\"field prepend-icon\">\n                <input type=\"text\" name=\"product-sku\" id=\"product-sku\" class=\"gui-input\" placeholder=\"\">\n                <label for=\"product-sku\" class=\"field-icon\">\n                  <i class=\"fa fa-barcode\"></i>\n                </label>\n              </label>\n            </div>\n            <!-- end section -->\n          </div>\n\n          <hr class=\"short alt\">\n          \n          <div class=\"section row mbn\">\n            <div class=\"col-md-4\">\n              <div class=\"fileupload fileupload-new admin-form\" data-provides=\"fileupload\">\n                <div class=\"fileupload-preview thumbnail mb20\">\n                  <img data-src=\"\" alt=\"holder\">\n                </div>\n                <div class=\"row\">\n                  <div class=\"col-xs-7 pr5\">\n                    <input type=\"text\" name=\"name2\" id=\"name2\" class=\"text-center event-name gui-input br-light bg-light\" placeholder=\"关键字\">\n                    <label for=\"name2\" class=\"field-icon\"></label>\n                  </div>\n                  <div class=\"col-xs-5\">\n                    <span class=\"button btn-system btn-file btn-block\">\n                      <span class=\"fileupload-new\">选择</span>\n                      <span class=\"fileupload-exists\">更改</span>\n                      <input type=\"file\">\n                    </span>\n                  </div>\n                </div>\n              </div>\n            </div>\n            <div class=\"col-md-8 pl15\">\n              <div class=\"section mb10\">\n                <label class=\"field prepend-icon\">\n                  <textarea style=\"height: 160px;\" class=\"gui-textarea br-light bg-light\" id=\"comment\" name=\"comment\" placeholder=\"商品描述\"></textarea>\n                  <label for=\"comment\" class=\"field-icon\">\n                    <i class=\"fa fa-comments\"></i>\n                  </label>\n                    <!-- <span class=\"input-footer \">\n                    <strong>Hint:</strong>Don't be negative or off topic! just be awesome...</span> -->\n                </label>\n              </div>\n            </div>\n          </div>\n          \n          <hr class=\"short alt\">\n\n          <div class=\"section row mbn\">\n              <h5 class=\"micro-header fw600 text-left\">\n                  <i class=\"fa fa-exclamation-circle text-info fa-lg pr10\"></i> Full-Width Drag and Drop Uploader \n              </h5>\n              <form class=\"dropzone\" id=\"dropZone2\" style=\"height: 490px;\">\n                  <div class=\"fallback\">\n                      <input name=\"file\" type=\"file\" multiple />\n                  </div>\n              </form>\n          </div>\n          <div class=\"section row mbn\">\n            <div class=\"col-sm-8\">\n            </div>\n            <div class=\"col-sm-4\">\n              <p class=\"text-right\">\n                <button class=\"btn btn-primary add-product\" type=\"button\" id=\"save-bottom\">保存</button>\n              </p>\n            </div>\n          </div>\n          <!-- end section -->\n        </div>\n    </div>\n    </form>\n  </div>\n</div>\n\n<!-- End: Content -->\n";
 
 /***/ },
 /* 17 */
@@ -36325,7 +36392,1341 @@ webpackJsonp([0,1],[
 /* 18 */
 /***/ function(module, exports, __webpack_require__) {
 
-	/* WEBPACK VAR INJECTION */(function(_, $) {var tpl = __webpack_require__(19);
+	var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	 * jQuery Form Plugin
+	 * version: 3.46.0-2013.11.21
+	 * Requires jQuery v1.5 or later
+	 * Copyright (c) 2013 M. Alsup
+	 * Examples and documentation at: http://malsup.com/jquery/form/
+	 * Project repository: https://github.com/malsup/form
+	 * Dual licensed under the MIT and GPL licenses.
+	 * https://github.com/malsup/form#copyright-and-license
+	 */
+	/*global ActiveXObject */
+
+	// AMD support
+	(function (factory) {
+	    if (true) {
+	        // using AMD; register as anon module
+	        !(__WEBPACK_AMD_DEFINE_ARRAY__ = [__webpack_require__(3)], __WEBPACK_AMD_DEFINE_FACTORY__ = (factory), __WEBPACK_AMD_DEFINE_RESULT__ = (typeof __WEBPACK_AMD_DEFINE_FACTORY__ === 'function' ? (__WEBPACK_AMD_DEFINE_FACTORY__.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__)) : __WEBPACK_AMD_DEFINE_FACTORY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+	    } else {
+	        // no AMD; invoke directly
+	        factory( (typeof(jQuery) != 'undefined') ? jQuery : window.Zepto );
+	    }
+	}
+
+	(function($) {
+	"use strict";
+
+	/*
+	    Usage Note:
+	    -----------
+	    Do not use both ajaxSubmit and ajaxForm on the same form.  These
+	    functions are mutually exclusive.  Use ajaxSubmit if you want
+	    to bind your own submit handler to the form.  For example,
+
+	    $(document).ready(function() {
+	        $('#myForm').on('submit', function(e) {
+	            e.preventDefault(); // <-- important
+	            $(this).ajaxSubmit({
+	                target: '#output'
+	            });
+	        });
+	    });
+
+	    Use ajaxForm when you want the plugin to manage all the event binding
+	    for you.  For example,
+
+	    $(document).ready(function() {
+	        $('#myForm').ajaxForm({
+	            target: '#output'
+	        });
+	    });
+
+	    You can also use ajaxForm with delegation (requires jQuery v1.7+), so the
+	    form does not have to exist when you invoke ajaxForm:
+
+	    $('#myForm').ajaxForm({
+	        delegation: true,
+	        target: '#output'
+	    });
+
+	    When using ajaxForm, the ajaxSubmit function will be invoked for you
+	    at the appropriate time.
+	*/
+
+	/**
+	 * Feature detection
+	 */
+	var feature = {};
+	feature.fileapi = $("<input type='file'/>").get(0).files !== undefined;
+	feature.formdata = window.FormData !== undefined;
+
+	var hasProp = !!$.fn.prop;
+
+	// attr2 uses prop when it can but checks the return type for
+	// an expected string.  this accounts for the case where a form 
+	// contains inputs with names like "action" or "method"; in those
+	// cases "prop" returns the element
+	$.fn.attr2 = function() {
+	    if ( ! hasProp )
+	        return this.attr.apply(this, arguments);
+	    var val = this.prop.apply(this, arguments);
+	    if ( ( val && val.jquery ) || typeof val === 'string' )
+	        return val;
+	    return this.attr.apply(this, arguments);
+	};
+
+	/**
+	 * ajaxSubmit() provides a mechanism for immediately submitting
+	 * an HTML form using AJAX.
+	 */
+	$.fn.ajaxSubmit = function(options) {
+	    /*jshint scripturl:true */
+
+	    // fast fail if nothing selected (http://dev.jquery.com/ticket/2752)
+	    if (!this.length) {
+	        log('ajaxSubmit: skipping submit process - no element selected');
+	        return this;
+	    }
+
+	    var method, action, url, $form = this;
+
+	    if (typeof options == 'function') {
+	        options = { success: options };
+	    }
+	    else if ( options === undefined ) {
+	        options = {};
+	    }
+
+	    method = options.type || this.attr2('method');
+	    action = options.url  || this.attr2('action');
+
+	    url = (typeof action === 'string') ? $.trim(action) : '';
+	    url = url || window.location.href || '';
+	    if (url) {
+	        // clean url (don't include hash vaue)
+	        url = (url.match(/^([^#]+)/)||[])[1];
+	    }
+
+	    options = $.extend(true, {
+	        url:  url,
+	        success: $.ajaxSettings.success,
+	        type: method || $.ajaxSettings.type,
+	        iframeSrc: /^https/i.test(window.location.href || '') ? 'javascript:false' : 'about:blank'
+	    }, options);
+
+	    // hook for manipulating the form data before it is extracted;
+	    // convenient for use with rich editors like tinyMCE or FCKEditor
+	    var veto = {};
+	    this.trigger('form-pre-serialize', [this, options, veto]);
+	    if (veto.veto) {
+	        log('ajaxSubmit: submit vetoed via form-pre-serialize trigger');
+	        return this;
+	    }
+
+	    // provide opportunity to alter form data before it is serialized
+	    if (options.beforeSerialize && options.beforeSerialize(this, options) === false) {
+	        log('ajaxSubmit: submit aborted via beforeSerialize callback');
+	        return this;
+	    }
+
+	    var traditional = options.traditional;
+	    if ( traditional === undefined ) {
+	        traditional = $.ajaxSettings.traditional;
+	    }
+
+	    var elements = [];
+	    var qx, a = this.formToArray(options.semantic, elements);
+	    if (options.data) {
+	        options.extraData = options.data;
+	        qx = $.param(options.data, traditional);
+	    }
+
+	    // give pre-submit callback an opportunity to abort the submit
+	    if (options.beforeSubmit && options.beforeSubmit(a, this, options) === false) {
+	        log('ajaxSubmit: submit aborted via beforeSubmit callback');
+	        return this;
+	    }
+
+	    // fire vetoable 'validate' event
+	    this.trigger('form-submit-validate', [a, this, options, veto]);
+	    if (veto.veto) {
+	        log('ajaxSubmit: submit vetoed via form-submit-validate trigger');
+	        return this;
+	    }
+
+	    var q = $.param(a, traditional);
+	    if (qx) {
+	        q = ( q ? (q + '&' + qx) : qx );
+	    }
+	    if (options.type.toUpperCase() == 'GET') {
+	        options.url += (options.url.indexOf('?') >= 0 ? '&' : '?') + q;
+	        options.data = null;  // data is null for 'get'
+	    }
+	    else {
+	        options.data = q; // data is the query string for 'post'
+	    }
+
+	    var callbacks = [];
+	    if (options.resetForm) {
+	        callbacks.push(function() { $form.resetForm(); });
+	    }
+	    if (options.clearForm) {
+	        callbacks.push(function() { $form.clearForm(options.includeHidden); });
+	    }
+
+	    // perform a load on the target only if dataType is not provided
+	    if (!options.dataType && options.target) {
+	        var oldSuccess = options.success || function(){};
+	        callbacks.push(function(data) {
+	            var fn = options.replaceTarget ? 'replaceWith' : 'html';
+	            $(options.target)[fn](data).each(oldSuccess, arguments);
+	        });
+	    }
+	    else if (options.success) {
+	        callbacks.push(options.success);
+	    }
+
+	    options.success = function(data, status, xhr) { // jQuery 1.4+ passes xhr as 3rd arg
+	        var context = options.context || this ;    // jQuery 1.4+ supports scope context
+	        for (var i=0, max=callbacks.length; i < max; i++) {
+	            callbacks[i].apply(context, [data, status, xhr || $form, $form]);
+	        }
+	    };
+
+	    if (options.error) {
+	        var oldError = options.error;
+	        options.error = function(xhr, status, error) {
+	            var context = options.context || this;
+	            oldError.apply(context, [xhr, status, error, $form]);
+	        };
+	    }
+
+	     if (options.complete) {
+	        var oldComplete = options.complete;
+	        options.complete = function(xhr, status) {
+	            var context = options.context || this;
+	            oldComplete.apply(context, [xhr, status, $form]);
+	        };
+	    }
+
+	    // are there files to upload?
+
+	    // [value] (issue #113), also see comment:
+	    // https://github.com/malsup/form/commit/588306aedba1de01388032d5f42a60159eea9228#commitcomment-2180219
+	    var fileInputs = $('input[type=file]:enabled', this).filter(function() { return $(this).val() !== ''; });
+
+	    var hasFileInputs = fileInputs.length > 0;
+	    var mp = 'multipart/form-data';
+	    var multipart = ($form.attr('enctype') == mp || $form.attr('encoding') == mp);
+
+	    var fileAPI = feature.fileapi && feature.formdata;
+	    log("fileAPI :" + fileAPI);
+	    var shouldUseFrame = (hasFileInputs || multipart) && !fileAPI;
+
+	    var jqxhr;
+
+	    // options.iframe allows user to force iframe mode
+	    // 06-NOV-09: now defaulting to iframe mode if file input is detected
+	    if (options.iframe !== false && (options.iframe || shouldUseFrame)) {
+	        // hack to fix Safari hang (thanks to Tim Molendijk for this)
+	        // see:  http://groups.google.com/group/jquery-dev/browse_thread/thread/36395b7ab510dd5d
+	        if (options.closeKeepAlive) {
+	            $.get(options.closeKeepAlive, function() {
+	                jqxhr = fileUploadIframe(a);
+	            });
+	        }
+	        else {
+	            jqxhr = fileUploadIframe(a);
+	        }
+	    }
+	    else if ((hasFileInputs || multipart) && fileAPI) {
+	        jqxhr = fileUploadXhr(a);
+	    }
+	    else {
+	        jqxhr = $.ajax(options);
+	    }
+
+	    $form.removeData('jqxhr').data('jqxhr', jqxhr);
+
+	    // clear element array
+	    for (var k=0; k < elements.length; k++)
+	        elements[k] = null;
+
+	    // fire 'notify' event
+	    this.trigger('form-submit-notify', [this, options]);
+	    return this;
+
+	    // utility fn for deep serialization
+	    function deepSerialize(extraData){
+	        var serialized = $.param(extraData, options.traditional).split('&');
+	        var len = serialized.length;
+	        var result = [];
+	        var i, part;
+	        for (i=0; i < len; i++) {
+	            // #252; undo param space replacement
+	            serialized[i] = serialized[i].replace(/\+/g,' ');
+	            part = serialized[i].split('=');
+	            // #278; use array instead of object storage, favoring array serializations
+	            result.push([decodeURIComponent(part[0]), decodeURIComponent(part[1])]);
+	        }
+	        return result;
+	    }
+
+	     // XMLHttpRequest Level 2 file uploads (big hat tip to francois2metz)
+	    function fileUploadXhr(a) {
+	        var formdata = new FormData();
+
+	        for (var i=0; i < a.length; i++) {
+	            formdata.append(a[i].name, a[i].value);
+	        }
+
+	        if (options.extraData) {
+	            var serializedData = deepSerialize(options.extraData);
+	            for (i=0; i < serializedData.length; i++)
+	                if (serializedData[i])
+	                    formdata.append(serializedData[i][0], serializedData[i][1]);
+	        }
+
+	        options.data = null;
+
+	        var s = $.extend(true, {}, $.ajaxSettings, options, {
+	            contentType: false,
+	            processData: false,
+	            cache: false,
+	            type: method || 'POST'
+	        });
+
+	        if (options.uploadProgress) {
+	            // workaround because jqXHR does not expose upload property
+	            s.xhr = function() {
+	                var xhr = $.ajaxSettings.xhr();
+	                if (xhr.upload) {
+	                    xhr.upload.addEventListener('progress', function(event) {
+	                        var percent = 0;
+	                        var position = event.loaded || event.position; /*event.position is deprecated*/
+	                        var total = event.total;
+	                        if (event.lengthComputable) {
+	                            percent = Math.ceil(position / total * 100);
+	                        }
+	                        options.uploadProgress(event, position, total, percent);
+	                    }, false);
+	                }
+	                return xhr;
+	            };
+	        }
+
+	        s.data = null;
+	        var beforeSend = s.beforeSend;
+	        s.beforeSend = function(xhr, o) {
+	            //Send FormData() provided by user
+	            if (options.formData)
+	                o.data = options.formData;
+	            else
+	                o.data = formdata;
+	            if(beforeSend)
+	                beforeSend.call(this, xhr, o);
+	        };
+	        return $.ajax(s);
+	    }
+
+	    // private function for handling file uploads (hat tip to YAHOO!)
+	    function fileUploadIframe(a) {
+	        var form = $form[0], el, i, s, g, id, $io, io, xhr, sub, n, timedOut, timeoutHandle;
+	        var deferred = $.Deferred();
+
+	        // #341
+	        deferred.abort = function(status) {
+	            xhr.abort(status);
+	        };
+
+	        if (a) {
+	            // ensure that every serialized input is still enabled
+	            for (i=0; i < elements.length; i++) {
+	                el = $(elements[i]);
+	                if ( hasProp )
+	                    el.prop('disabled', false);
+	                else
+	                    el.removeAttr('disabled');
+	            }
+	        }
+
+	        s = $.extend(true, {}, $.ajaxSettings, options);
+	        s.context = s.context || s;
+	        id = 'jqFormIO' + (new Date().getTime());
+	        if (s.iframeTarget) {
+	            $io = $(s.iframeTarget);
+	            n = $io.attr2('name');
+	            if (!n)
+	                 $io.attr2('name', id);
+	            else
+	                id = n;
+	        }
+	        else {
+	            $io = $('<iframe name="' + id + '" src="'+ s.iframeSrc +'" />');
+	            $io.css({ position: 'absolute', top: '-1000px', left: '-1000px' });
+	        }
+	        io = $io[0];
+
+
+	        xhr = { // mock object
+	            aborted: 0,
+	            responseText: null,
+	            responseXML: null,
+	            status: 0,
+	            statusText: 'n/a',
+	            getAllResponseHeaders: function() {},
+	            getResponseHeader: function() {},
+	            setRequestHeader: function() {},
+	            abort: function(status) {
+	                var e = (status === 'timeout' ? 'timeout' : 'aborted');
+	                log('aborting upload... ' + e);
+	                this.aborted = 1;
+
+	                try { // #214, #257
+	                    if (io.contentWindow.document.execCommand) {
+	                        io.contentWindow.document.execCommand('Stop');
+	                    }
+	                }
+	                catch(ignore) {}
+
+	                $io.attr('src', s.iframeSrc); // abort op in progress
+	                xhr.error = e;
+	                if (s.error)
+	                    s.error.call(s.context, xhr, e, status);
+	                if (g)
+	                    $.event.trigger("ajaxError", [xhr, s, e]);
+	                if (s.complete)
+	                    s.complete.call(s.context, xhr, e);
+	            }
+	        };
+
+	        g = s.global;
+	        // trigger ajax global events so that activity/block indicators work like normal
+	        if (g && 0 === $.active++) {
+	            $.event.trigger("ajaxStart");
+	        }
+	        if (g) {
+	            $.event.trigger("ajaxSend", [xhr, s]);
+	        }
+
+	        if (s.beforeSend && s.beforeSend.call(s.context, xhr, s) === false) {
+	            if (s.global) {
+	                $.active--;
+	            }
+	            deferred.reject();
+	            return deferred;
+	        }
+	        if (xhr.aborted) {
+	            deferred.reject();
+	            return deferred;
+	        }
+
+	        // add submitting element to data if we know it
+	        sub = form.clk;
+	        if (sub) {
+	            n = sub.name;
+	            if (n && !sub.disabled) {
+	                s.extraData = s.extraData || {};
+	                s.extraData[n] = sub.value;
+	                if (sub.type == "image") {
+	                    s.extraData[n+'.x'] = form.clk_x;
+	                    s.extraData[n+'.y'] = form.clk_y;
+	                }
+	            }
+	        }
+
+	        var CLIENT_TIMEOUT_ABORT = 1;
+	        var SERVER_ABORT = 2;
+	                
+	        function getDoc(frame) {
+	            /* it looks like contentWindow or contentDocument do not
+	             * carry the protocol property in ie8, when running under ssl
+	             * frame.document is the only valid response document, since
+	             * the protocol is know but not on the other two objects. strange?
+	             * "Same origin policy" http://en.wikipedia.org/wiki/Same_origin_policy
+	             */
+	            
+	            var doc = null;
+	            
+	            // IE8 cascading access check
+	            try {
+	                if (frame.contentWindow) {
+	                    doc = frame.contentWindow.document;
+	                }
+	            } catch(err) {
+	                // IE8 access denied under ssl & missing protocol
+	                log('cannot get iframe.contentWindow document: ' + err);
+	            }
+
+	            if (doc) { // successful getting content
+	                return doc;
+	            }
+
+	            try { // simply checking may throw in ie8 under ssl or mismatched protocol
+	                doc = frame.contentDocument ? frame.contentDocument : frame.document;
+	            } catch(err) {
+	                // last attempt
+	                log('cannot get iframe.contentDocument: ' + err);
+	                doc = frame.document;
+	            }
+	            return doc;
+	        }
+
+	        // Rails CSRF hack (thanks to Yvan Barthelemy)
+	        var csrf_token = $('meta[name=csrf-token]').attr('content');
+	        var csrf_param = $('meta[name=csrf-param]').attr('content');
+	        if (csrf_param && csrf_token) {
+	            s.extraData = s.extraData || {};
+	            s.extraData[csrf_param] = csrf_token;
+	        }
+
+	        // take a breath so that pending repaints get some cpu time before the upload starts
+	        function doSubmit() {
+	            // make sure form attrs are set
+	            var t = $form.attr2('target'), a = $form.attr2('action');
+
+	            // update form attrs in IE friendly way
+	            form.setAttribute('target',id);
+	            if (!method || /post/i.test(method) ) {
+	                form.setAttribute('method', 'POST');
+	            }
+	            if (a != s.url) {
+	                form.setAttribute('action', s.url);
+	            }
+
+	            // ie borks in some cases when setting encoding
+	            if (! s.skipEncodingOverride && (!method || /post/i.test(method))) {
+	                $form.attr({
+	                    encoding: 'multipart/form-data',
+	                    enctype:  'multipart/form-data'
+	                });
+	            }
+
+	            // support timout
+	            if (s.timeout) {
+	                timeoutHandle = setTimeout(function() { timedOut = true; cb(CLIENT_TIMEOUT_ABORT); }, s.timeout);
+	            }
+
+	            // look for server aborts
+	            function checkState() {
+	                try {
+	                    var state = getDoc(io).readyState;
+	                    log('state = ' + state);
+	                    if (state && state.toLowerCase() == 'uninitialized')
+	                        setTimeout(checkState,50);
+	                }
+	                catch(e) {
+	                    log('Server abort: ' , e, ' (', e.name, ')');
+	                    cb(SERVER_ABORT);
+	                    if (timeoutHandle)
+	                        clearTimeout(timeoutHandle);
+	                    timeoutHandle = undefined;
+	                }
+	            }
+
+	            // add "extra" data to form if provided in options
+	            var extraInputs = [];
+	            try {
+	                if (s.extraData) {
+	                    for (var n in s.extraData) {
+	                        if (s.extraData.hasOwnProperty(n)) {
+	                           // if using the $.param format that allows for multiple values with the same name
+	                           if($.isPlainObject(s.extraData[n]) && s.extraData[n].hasOwnProperty('name') && s.extraData[n].hasOwnProperty('value')) {
+	                               extraInputs.push(
+	                               $('<input type="hidden" name="'+s.extraData[n].name+'">').val(s.extraData[n].value)
+	                                   .appendTo(form)[0]);
+	                           } else {
+	                               extraInputs.push(
+	                               $('<input type="hidden" name="'+n+'">').val(s.extraData[n])
+	                                   .appendTo(form)[0]);
+	                           }
+	                        }
+	                    }
+	                }
+
+	                if (!s.iframeTarget) {
+	                    // add iframe to doc and submit the form
+	                    $io.appendTo('body');
+	                }
+	                if (io.attachEvent)
+	                    io.attachEvent('onload', cb);
+	                else
+	                    io.addEventListener('load', cb, false);
+	                setTimeout(checkState,15);
+
+	                try {
+	                    form.submit();
+	                } catch(err) {
+	                    // just in case form has element with name/id of 'submit'
+	                    var submitFn = document.createElement('form').submit;
+	                    submitFn.apply(form);
+	                }
+	            }
+	            finally {
+	                // reset attrs and remove "extra" input elements
+	                form.setAttribute('action',a);
+	                if(t) {
+	                    form.setAttribute('target', t);
+	                } else {
+	                    $form.removeAttr('target');
+	                }
+	                $(extraInputs).remove();
+	            }
+	        }
+
+	        if (s.forceSync) {
+	            doSubmit();
+	        }
+	        else {
+	            setTimeout(doSubmit, 10); // this lets dom updates render
+	        }
+
+	        var data, doc, domCheckCount = 50, callbackProcessed;
+
+	        function cb(e) {
+	            if (xhr.aborted || callbackProcessed) {
+	                return;
+	            }
+	            
+	            doc = getDoc(io);
+	            if(!doc) {
+	                log('cannot access response document');
+	                e = SERVER_ABORT;
+	            }
+	            if (e === CLIENT_TIMEOUT_ABORT && xhr) {
+	                xhr.abort('timeout');
+	                deferred.reject(xhr, 'timeout');
+	                return;
+	            }
+	            else if (e == SERVER_ABORT && xhr) {
+	                xhr.abort('server abort');
+	                deferred.reject(xhr, 'error', 'server abort');
+	                return;
+	            }
+
+	            if (!doc || doc.location.href == s.iframeSrc) {
+	                // response not received yet
+	                if (!timedOut)
+	                    return;
+	            }
+	            if (io.detachEvent)
+	                io.detachEvent('onload', cb);
+	            else
+	                io.removeEventListener('load', cb, false);
+
+	            var status = 'success', errMsg;
+	            try {
+	                if (timedOut) {
+	                    throw 'timeout';
+	                }
+
+	                var isXml = s.dataType == 'xml' || doc.XMLDocument || $.isXMLDoc(doc);
+	                log('isXml='+isXml);
+	                if (!isXml && window.opera && (doc.body === null || !doc.body.innerHTML)) {
+	                    if (--domCheckCount) {
+	                        // in some browsers (Opera) the iframe DOM is not always traversable when
+	                        // the onload callback fires, so we loop a bit to accommodate
+	                        log('requeing onLoad callback, DOM not available');
+	                        setTimeout(cb, 250);
+	                        return;
+	                    }
+	                    // let this fall through because server response could be an empty document
+	                    //log('Could not access iframe DOM after mutiple tries.');
+	                    //throw 'DOMException: not available';
+	                }
+
+	                //log('response detected');
+	                var docRoot = doc.body ? doc.body : doc.documentElement;
+	                xhr.responseText = docRoot ? docRoot.innerHTML : null;
+	                xhr.responseXML = doc.XMLDocument ? doc.XMLDocument : doc;
+	                if (isXml)
+	                    s.dataType = 'xml';
+	                xhr.getResponseHeader = function(header){
+	                    var headers = {'content-type': s.dataType};
+	                    return headers[header.toLowerCase()];
+	                };
+	                // support for XHR 'status' & 'statusText' emulation :
+	                if (docRoot) {
+	                    xhr.status = Number( docRoot.getAttribute('status') ) || xhr.status;
+	                    xhr.statusText = docRoot.getAttribute('statusText') || xhr.statusText;
+	                }
+
+	                var dt = (s.dataType || '').toLowerCase();
+	                var scr = /(json|script|text)/.test(dt);
+	                if (scr || s.textarea) {
+	                    // see if user embedded response in textarea
+	                    var ta = doc.getElementsByTagName('textarea')[0];
+	                    if (ta) {
+	                        xhr.responseText = ta.value;
+	                        // support for XHR 'status' & 'statusText' emulation :
+	                        xhr.status = Number( ta.getAttribute('status') ) || xhr.status;
+	                        xhr.statusText = ta.getAttribute('statusText') || xhr.statusText;
+	                    }
+	                    else if (scr) {
+	                        // account for browsers injecting pre around json response
+	                        var pre = doc.getElementsByTagName('pre')[0];
+	                        var b = doc.getElementsByTagName('body')[0];
+	                        if (pre) {
+	                            xhr.responseText = pre.textContent ? pre.textContent : pre.innerText;
+	                        }
+	                        else if (b) {
+	                            xhr.responseText = b.textContent ? b.textContent : b.innerText;
+	                        }
+	                    }
+	                }
+	                else if (dt == 'xml' && !xhr.responseXML && xhr.responseText) {
+	                    xhr.responseXML = toXml(xhr.responseText);
+	                }
+
+	                try {
+	                    data = httpData(xhr, dt, s);
+	                }
+	                catch (err) {
+	                    status = 'parsererror';
+	                    xhr.error = errMsg = (err || status);
+	                }
+	            }
+	            catch (err) {
+	                log('error caught: ',err);
+	                status = 'error';
+	                xhr.error = errMsg = (err || status);
+	            }
+
+	            if (xhr.aborted) {
+	                log('upload aborted');
+	                status = null;
+	            }
+
+	            if (xhr.status) { // we've set xhr.status
+	                status = (xhr.status >= 200 && xhr.status < 300 || xhr.status === 304) ? 'success' : 'error';
+	            }
+
+	            // ordering of these callbacks/triggers is odd, but that's how $.ajax does it
+	            if (status === 'success') {
+	                if (s.success)
+	                    s.success.call(s.context, data, 'success', xhr);
+	                deferred.resolve(xhr.responseText, 'success', xhr);
+	                if (g)
+	                    $.event.trigger("ajaxSuccess", [xhr, s]);
+	            }
+	            else if (status) {
+	                if (errMsg === undefined)
+	                    errMsg = xhr.statusText;
+	                if (s.error)
+	                    s.error.call(s.context, xhr, status, errMsg);
+	                deferred.reject(xhr, 'error', errMsg);
+	                if (g)
+	                    $.event.trigger("ajaxError", [xhr, s, errMsg]);
+	            }
+
+	            if (g)
+	                $.event.trigger("ajaxComplete", [xhr, s]);
+
+	            if (g && ! --$.active) {
+	                $.event.trigger("ajaxStop");
+	            }
+
+	            if (s.complete)
+	                s.complete.call(s.context, xhr, status);
+
+	            callbackProcessed = true;
+	            if (s.timeout)
+	                clearTimeout(timeoutHandle);
+
+	            // clean up
+	            setTimeout(function() {
+	                if (!s.iframeTarget)
+	                    $io.remove();
+	                else  //adding else to clean up existing iframe response.
+	                    $io.attr('src', s.iframeSrc);
+	                xhr.responseXML = null;
+	            }, 100);
+	        }
+
+	        var toXml = $.parseXML || function(s, doc) { // use parseXML if available (jQuery 1.5+)
+	            if (window.ActiveXObject) {
+	                doc = new ActiveXObject('Microsoft.XMLDOM');
+	                doc.async = 'false';
+	                doc.loadXML(s);
+	            }
+	            else {
+	                doc = (new DOMParser()).parseFromString(s, 'text/xml');
+	            }
+	            return (doc && doc.documentElement && doc.documentElement.nodeName != 'parsererror') ? doc : null;
+	        };
+	        var parseJSON = $.parseJSON || function(s) {
+	            /*jslint evil:true */
+	            return window['eval']('(' + s + ')');
+	        };
+
+	        var httpData = function( xhr, type, s ) { // mostly lifted from jq1.4.4
+
+	            var ct = xhr.getResponseHeader('content-type') || '',
+	                xml = type === 'xml' || !type && ct.indexOf('xml') >= 0,
+	                data = xml ? xhr.responseXML : xhr.responseText;
+
+	            if (xml && data.documentElement.nodeName === 'parsererror') {
+	                if ($.error)
+	                    $.error('parsererror');
+	            }
+	            if (s && s.dataFilter) {
+	                data = s.dataFilter(data, type);
+	            }
+	            if (typeof data === 'string') {
+	                if (type === 'json' || !type && ct.indexOf('json') >= 0) {
+	                    data = parseJSON(data);
+	                } else if (type === "script" || !type && ct.indexOf("javascript") >= 0) {
+	                    $.globalEval(data);
+	                }
+	            }
+	            return data;
+	        };
+
+	        return deferred;
+	    }
+	};
+
+	/**
+	 * ajaxForm() provides a mechanism for fully automating form submission.
+	 *
+	 * The advantages of using this method instead of ajaxSubmit() are:
+	 *
+	 * 1: This method will include coordinates for <input type="image" /> elements (if the element
+	 *    is used to submit the form).
+	 * 2. This method will include the submit element's name/value data (for the element that was
+	 *    used to submit the form).
+	 * 3. This method binds the submit() method to the form for you.
+	 *
+	 * The options argument for ajaxForm works exactly as it does for ajaxSubmit.  ajaxForm merely
+	 * passes the options argument along after properly binding events for submit elements and
+	 * the form itself.
+	 */
+	$.fn.ajaxForm = function(options) {
+	    options = options || {};
+	    options.delegation = options.delegation && $.isFunction($.fn.on);
+
+	    // in jQuery 1.3+ we can fix mistakes with the ready state
+	    if (!options.delegation && this.length === 0) {
+	        var o = { s: this.selector, c: this.context };
+	        if (!$.isReady && o.s) {
+	            log('DOM not ready, queuing ajaxForm');
+	            $(function() {
+	                $(o.s,o.c).ajaxForm(options);
+	            });
+	            return this;
+	        }
+	        // is your DOM ready?  http://docs.jquery.com/Tutorials:Introducing_$(document).ready()
+	        log('terminating; zero elements found by selector' + ($.isReady ? '' : ' (DOM not ready)'));
+	        return this;
+	    }
+
+	    if ( options.delegation ) {
+	        $(document)
+	            .off('submit.form-plugin', this.selector, doAjaxSubmit)
+	            .off('click.form-plugin', this.selector, captureSubmittingElement)
+	            .on('submit.form-plugin', this.selector, options, doAjaxSubmit)
+	            .on('click.form-plugin', this.selector, options, captureSubmittingElement);
+	        return this;
+	    }
+
+	    return this.ajaxFormUnbind()
+	        .bind('submit.form-plugin', options, doAjaxSubmit)
+	        .bind('click.form-plugin', options, captureSubmittingElement);
+	};
+
+	// private event handlers
+	function doAjaxSubmit(e) {
+	    /*jshint validthis:true */
+	    var options = e.data;
+	    if (!e.isDefaultPrevented()) { // if event has been canceled, don't proceed
+	        e.preventDefault();
+	        $(e.target).ajaxSubmit(options); // #365
+	    }
+	}
+
+	function captureSubmittingElement(e) {
+	    /*jshint validthis:true */
+	    var target = e.target;
+	    var $el = $(target);
+	    if (!($el.is("[type=submit],[type=image]"))) {
+	        // is this a child element of the submit el?  (ex: a span within a button)
+	        var t = $el.closest('[type=submit]');
+	        if (t.length === 0) {
+	            return;
+	        }
+	        target = t[0];
+	    }
+	    var form = this;
+	    form.clk = target;
+	    if (target.type == 'image') {
+	        if (e.offsetX !== undefined) {
+	            form.clk_x = e.offsetX;
+	            form.clk_y = e.offsetY;
+	        } else if (typeof $.fn.offset == 'function') {
+	            var offset = $el.offset();
+	            form.clk_x = e.pageX - offset.left;
+	            form.clk_y = e.pageY - offset.top;
+	        } else {
+	            form.clk_x = e.pageX - target.offsetLeft;
+	            form.clk_y = e.pageY - target.offsetTop;
+	        }
+	    }
+	    // clear form vars
+	    setTimeout(function() { form.clk = form.clk_x = form.clk_y = null; }, 100);
+	}
+
+
+	// ajaxFormUnbind unbinds the event handlers that were bound by ajaxForm
+	$.fn.ajaxFormUnbind = function() {
+	    return this.unbind('submit.form-plugin click.form-plugin');
+	};
+
+	/**
+	 * formToArray() gathers form element data into an array of objects that can
+	 * be passed to any of the following ajax functions: $.get, $.post, or load.
+	 * Each object in the array has both a 'name' and 'value' property.  An example of
+	 * an array for a simple login form might be:
+	 *
+	 * [ { name: 'username', value: 'jresig' }, { name: 'password', value: 'secret' } ]
+	 *
+	 * It is this array that is passed to pre-submit callback functions provided to the
+	 * ajaxSubmit() and ajaxForm() methods.
+	 */
+	$.fn.formToArray = function(semantic, elements) {
+	    var a = [];
+	    if (this.length === 0) {
+	        return a;
+	    }
+
+	    var form = this[0];
+	    var els = semantic ? form.getElementsByTagName('*') : form.elements;
+	    if (!els) {
+	        return a;
+	    }
+
+	    var i,j,n,v,el,max,jmax;
+	    for(i=0, max=els.length; i < max; i++) {
+	        el = els[i];
+	        n = el.name;
+	        if (!n || el.disabled) {
+	            continue;
+	        }
+
+	        if (semantic && form.clk && el.type == "image") {
+	            // handle image inputs on the fly when semantic == true
+	            if(form.clk == el) {
+	                a.push({name: n, value: $(el).val(), type: el.type });
+	                a.push({name: n+'.x', value: form.clk_x}, {name: n+'.y', value: form.clk_y});
+	            }
+	            continue;
+	        }
+
+	        v = $.fieldValue(el, true);
+	        if (v && v.constructor == Array) {
+	            if (elements)
+	                elements.push(el);
+	            for(j=0, jmax=v.length; j < jmax; j++) {
+	                a.push({name: n, value: v[j]});
+	            }
+	        }
+	        else if (feature.fileapi && el.type == 'file') {
+	            if (elements)
+	                elements.push(el);
+	            var files = el.files;
+	            if (files.length) {
+	                for (j=0; j < files.length; j++) {
+	                    a.push({name: n, value: files[j], type: el.type});
+	                }
+	            }
+	            else {
+	                // #180
+	                a.push({ name: n, value: '', type: el.type });
+	            }
+	        }
+	        else if (v !== null && typeof v != 'undefined') {
+	            if (elements)
+	                elements.push(el);
+	            a.push({name: n, value: v, type: el.type, required: el.required});
+	        }
+	    }
+
+	    if (!semantic && form.clk) {
+	        // input type=='image' are not found in elements array! handle it here
+	        var $input = $(form.clk), input = $input[0];
+	        n = input.name;
+	        if (n && !input.disabled && input.type == 'image') {
+	            a.push({name: n, value: $input.val()});
+	            a.push({name: n+'.x', value: form.clk_x}, {name: n+'.y', value: form.clk_y});
+	        }
+	    }
+	    return a;
+	};
+
+	/**
+	 * Serializes form data into a 'submittable' string. This method will return a string
+	 * in the format: name1=value1&amp;name2=value2
+	 */
+	$.fn.formSerialize = function(semantic) {
+	    //hand off to jQuery.param for proper encoding
+	    return $.param(this.formToArray(semantic));
+	};
+
+	/**
+	 * Serializes all field elements in the jQuery object into a query string.
+	 * This method will return a string in the format: name1=value1&amp;name2=value2
+	 */
+	$.fn.fieldSerialize = function(successful) {
+	    var a = [];
+	    this.each(function() {
+	        var n = this.name;
+	        if (!n) {
+	            return;
+	        }
+	        var v = $.fieldValue(this, successful);
+	        if (v && v.constructor == Array) {
+	            for (var i=0,max=v.length; i < max; i++) {
+	                a.push({name: n, value: v[i]});
+	            }
+	        }
+	        else if (v !== null && typeof v != 'undefined') {
+	            a.push({name: this.name, value: v});
+	        }
+	    });
+	    //hand off to jQuery.param for proper encoding
+	    return $.param(a);
+	};
+
+	/**
+	 * Returns the value(s) of the element in the matched set.  For example, consider the following form:
+	 *
+	 *  <form><fieldset>
+	 *      <input name="A" type="text" />
+	 *      <input name="A" type="text" />
+	 *      <input name="B" type="checkbox" value="B1" />
+	 *      <input name="B" type="checkbox" value="B2"/>
+	 *      <input name="C" type="radio" value="C1" />
+	 *      <input name="C" type="radio" value="C2" />
+	 *  </fieldset></form>
+	 *
+	 *  var v = $('input[type=text]').fieldValue();
+	 *  // if no values are entered into the text inputs
+	 *  v == ['','']
+	 *  // if values entered into the text inputs are 'foo' and 'bar'
+	 *  v == ['foo','bar']
+	 *
+	 *  var v = $('input[type=checkbox]').fieldValue();
+	 *  // if neither checkbox is checked
+	 *  v === undefined
+	 *  // if both checkboxes are checked
+	 *  v == ['B1', 'B2']
+	 *
+	 *  var v = $('input[type=radio]').fieldValue();
+	 *  // if neither radio is checked
+	 *  v === undefined
+	 *  // if first radio is checked
+	 *  v == ['C1']
+	 *
+	 * The successful argument controls whether or not the field element must be 'successful'
+	 * (per http://www.w3.org/TR/html4/interact/forms.html#successful-controls).
+	 * The default value of the successful argument is true.  If this value is false the value(s)
+	 * for each element is returned.
+	 *
+	 * Note: This method *always* returns an array.  If no valid value can be determined the
+	 *    array will be empty, otherwise it will contain one or more values.
+	 */
+	$.fn.fieldValue = function(successful) {
+	    for (var val=[], i=0, max=this.length; i < max; i++) {
+	        var el = this[i];
+	        var v = $.fieldValue(el, successful);
+	        if (v === null || typeof v == 'undefined' || (v.constructor == Array && !v.length)) {
+	            continue;
+	        }
+	        if (v.constructor == Array)
+	            $.merge(val, v);
+	        else
+	            val.push(v);
+	    }
+	    return val;
+	};
+
+	/**
+	 * Returns the value of the field element.
+	 */
+	$.fieldValue = function(el, successful) {
+	    var n = el.name, t = el.type, tag = el.tagName.toLowerCase();
+	    if (successful === undefined) {
+	        successful = true;
+	    }
+
+	    if (successful && (!n || el.disabled || t == 'reset' || t == 'button' ||
+	        (t == 'checkbox' || t == 'radio') && !el.checked ||
+	        (t == 'submit' || t == 'image') && el.form && el.form.clk != el ||
+	        tag == 'select' && el.selectedIndex == -1)) {
+	            return null;
+	    }
+
+	    if (tag == 'select') {
+	        var index = el.selectedIndex;
+	        if (index < 0) {
+	            return null;
+	        }
+	        var a = [], ops = el.options;
+	        var one = (t == 'select-one');
+	        var max = (one ? index+1 : ops.length);
+	        for(var i=(one ? index : 0); i < max; i++) {
+	            var op = ops[i];
+	            if (op.selected) {
+	                var v = op.value;
+	                if (!v) { // extra pain for IE...
+	                    v = (op.attributes && op.attributes['value'] && !(op.attributes['value'].specified)) ? op.text : op.value;
+	                }
+	                if (one) {
+	                    return v;
+	                }
+	                a.push(v);
+	            }
+	        }
+	        return a;
+	    }
+	    return $(el).val();
+	};
+
+	/**
+	 * Clears the form data.  Takes the following actions on the form's input fields:
+	 *  - input text fields will have their 'value' property set to the empty string
+	 *  - select elements will have their 'selectedIndex' property set to -1
+	 *  - checkbox and radio inputs will have their 'checked' property set to false
+	 *  - inputs of type submit, button, reset, and hidden will *not* be effected
+	 *  - button elements will *not* be effected
+	 */
+	$.fn.clearForm = function(includeHidden) {
+	    return this.each(function() {
+	        $('input,select,textarea', this).clearFields(includeHidden);
+	    });
+	};
+
+	/**
+	 * Clears the selected form elements.
+	 */
+	$.fn.clearFields = $.fn.clearInputs = function(includeHidden) {
+	    var re = /^(?:color|date|datetime|email|month|number|password|range|search|tel|text|time|url|week)$/i; // 'hidden' is not in this list
+	    return this.each(function() {
+	        var t = this.type, tag = this.tagName.toLowerCase();
+	        if (re.test(t) || tag == 'textarea') {
+	            this.value = '';
+	        }
+	        else if (t == 'checkbox' || t == 'radio') {
+	            this.checked = false;
+	        }
+	        else if (tag == 'select') {
+	            this.selectedIndex = -1;
+	        }
+			else if (t == "file") {
+				if (/MSIE/.test(navigator.userAgent)) {
+					$(this).replaceWith($(this).clone(true));
+				} else {
+					$(this).val('');
+				}
+			}
+	        else if (includeHidden) {
+	            // includeHidden can be the value true, or it can be a selector string
+	            // indicating a special test; for example:
+	            //  $('#myForm').clearForm('.special:hidden')
+	            // the above would clean hidden inputs that have the class of 'special'
+	            if ( (includeHidden === true && /hidden/.test(t)) ||
+	                 (typeof includeHidden == 'string' && $(this).is(includeHidden)) )
+	                this.value = '';
+	        }
+	    });
+	};
+
+	/**
+	 * Resets the form data.  Causes all form elements to be reset to their original value.
+	 */
+	$.fn.resetForm = function() {
+	    return this.each(function() {
+	        // guard against an input with the name of 'reset'
+	        // note that IE reports the reset function as an 'object'
+	        if (typeof this.reset == 'function' || (typeof this.reset == 'object' && !this.reset.nodeType)) {
+	            this.reset();
+	        }
+	    });
+	};
+
+	/**
+	 * Enables or disables any matching elements.
+	 */
+	$.fn.enable = function(b) {
+	    if (b === undefined) {
+	        b = true;
+	    }
+	    return this.each(function() {
+	        this.disabled = !b;
+	    });
+	};
+
+	/**
+	 * Checks/unchecks any matching checkboxes or radio buttons and
+	 * selects/deselects and matching option elements.
+	 */
+	$.fn.selected = function(select) {
+	    if (select === undefined) {
+	        select = true;
+	    }
+	    return this.each(function() {
+	        var t = this.type;
+	        if (t == 'checkbox' || t == 'radio') {
+	            this.checked = select;
+	        }
+	        else if (this.tagName.toLowerCase() == 'option') {
+	            var $sel = $(this).parent('select');
+	            if (select && $sel[0] && $sel[0].type == 'select-one') {
+	                // deselect all other options
+	                $sel.find('option').selected(false);
+	            }
+	            this.selected = select;
+	        }
+	    });
+	};
+
+	// expose debug var
+	$.fn.ajaxSubmit.debug = false;
+
+	// helper fn for console logging
+	function log() {
+	    if (!$.fn.ajaxSubmit.debug)
+	        return;
+	    var msg = '[jquery.form] ' + Array.prototype.join.call(arguments,'');
+	    if (window.console && window.console.log) {
+	        window.console.log(msg);
+	    }
+	    else if (window.opera && window.opera.postError) {
+	        window.opera.postError(msg);
+	    }
+	}
+
+	}));
+
+
+
+/***/ },
+/* 19 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(__webpack_provided_window_dot_jQuery) {/**
+	 * bootstrap-notify.js v1.0
+	 * --
+	  * Copyright 2012 Goodybag, Inc.
+	 * --
+	 * Licensed under the Apache License, Version 2.0 (the "License");
+	 * you may not use this file except in compliance with the License.
+	 * You may obtain a copy of the License at
+	 *
+	 * http://www.apache.org/licenses/LICENSE-2.0
+	 *
+	 * Unless required by applicable law or agreed to in writing, software
+	 * distributed under the License is distributed on an "AS IS" BASIS,
+	 * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+	 * See the License for the specific language governing permissions and
+	 * limitations under the License.
+	 */
+
+	(function ($) {
+	  var Notification = function (element, options) {
+	    // Element collection
+	    this.$element = $(element);
+	    this.$note    = $('<div class="alert"></div>');
+	    this.options  = $.extend(true, {}, $.fn.notify.defaults, options);
+
+	    // Setup from options
+	    if(this.options.transition) {
+	      if(this.options.transition == 'fade')
+	        this.$note.addClass('in').addClass(this.options.transition);
+	      else
+	        this.$note.addClass(this.options.transition);
+	    } else
+	      this.$note.addClass('fade').addClass('in');
+
+	    if(this.options.type)
+	      this.$note.addClass('alert-' + this.options.type);
+	    else
+	      this.$note.addClass('alert-success');
+
+	    if(!this.options.message && this.$element.data("message") !== '') // dom text
+	      this.$note.html(this.$element.data("message"));
+	    else
+	      if(typeof this.options.message === 'object') {
+	        if(this.options.message.html)
+	          this.$note.html(this.options.message.html);
+	        else if(this.options.message.text)
+	          this.$note.text(this.options.message.text);
+	      } else
+	        this.$note.html(this.options.message);
+
+	    if(this.options.closable) {
+	      var link = $('<a class="close pull-right" href="#">&times;</a>');
+	      $(link).on('click', $.proxy(onClose, this));
+	      this.$note.prepend(link);
+	    }
+
+	    return this;
+	  };
+
+	  var onClose = function() {
+	    this.options.onClose();
+	    $(this.$note).remove();
+	    this.options.onClosed();
+	    return false;
+	  };
+
+	  Notification.prototype.show = function () {
+	    if(this.options.fadeOut.enabled)
+	      this.$note.delay(this.options.fadeOut.delay || 3000).fadeOut('slow', $.proxy(onClose, this));
+
+	    this.$element.append(this.$note);
+	    this.$note.alert();
+	  };
+
+	  Notification.prototype.hide = function () {
+	    if(this.options.fadeOut.enabled)
+	      this.$note.delay(this.options.fadeOut.delay || 3000).fadeOut('slow', $.proxy(onClose, this));
+	    else onClose.call(this);
+	  };
+
+	  $.fn.notify = function (options) {
+	    return new Notification(this, options);
+	  };
+
+	  $.fn.notify.defaults = {
+	    type: 'success',
+	    closable: true,
+	    transition: 'fade',
+	    fadeOut: {
+	      enabled: true,
+	      delay: 3000
+	    },
+	    message: null,
+	    onClose: function () {},
+	    onClosed: function () {}
+	  }
+	})(__webpack_provided_window_dot_jQuery);
+
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
+/* 20 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(jQuery) {!function(){function a(b){var c=a.modules[b];if(!c)throw new Error('failed to require "'+b+'"');return"exports"in c||"function"!=typeof c.definition||(c.client=c.component=!0,c.definition.call(this,c.exports={},c),delete c.definition),c.exports}a.modules={},a.register=function(b,c){a.modules[b]={definition:c}},a.define=function(b,c){a.modules[b]={exports:c}},a.register("component~emitter@1.1.2",function(a,b){function c(a){return a?d(a):void 0}function d(a){for(var b in c.prototype)a[b]=c.prototype[b];return a}b.exports=c,c.prototype.on=c.prototype.addEventListener=function(a,b){return this._callbacks=this._callbacks||{},(this._callbacks[a]=this._callbacks[a]||[]).push(b),this},c.prototype.once=function(a,b){function c(){d.off(a,c),b.apply(this,arguments)}var d=this;return this._callbacks=this._callbacks||{},c.fn=b,this.on(a,c),this},c.prototype.off=c.prototype.removeListener=c.prototype.removeAllListeners=c.prototype.removeEventListener=function(a,b){if(this._callbacks=this._callbacks||{},0==arguments.length)return this._callbacks={},this;var c=this._callbacks[a];if(!c)return this;if(1==arguments.length)return delete this._callbacks[a],this;for(var d,e=0;e<c.length;e++)if(d=c[e],d===b||d.fn===b){c.splice(e,1);break}return this},c.prototype.emit=function(a){this._callbacks=this._callbacks||{};var b=[].slice.call(arguments,1),c=this._callbacks[a];if(c){c=c.slice(0);for(var d=0,e=c.length;e>d;++d)c[d].apply(this,b)}return this},c.prototype.listeners=function(a){return this._callbacks=this._callbacks||{},this._callbacks[a]||[]},c.prototype.hasListeners=function(a){return!!this.listeners(a).length}}),a.register("dropzone",function(b,c){c.exports=a("dropzone/lib/dropzone.js")}),a.register("dropzone/lib/dropzone.js",function(b,c){(function(){var b,d,e,f,g,h,i,j,k={}.hasOwnProperty,l=function(a,b){function c(){this.constructor=a}for(var d in b)k.call(b,d)&&(a[d]=b[d]);return c.prototype=b.prototype,a.prototype=new c,a.__super__=b.prototype,a},m=[].slice;d="undefined"!=typeof Emitter&&null!==Emitter?Emitter:a("component~emitter@1.1.2"),i=function(){},b=function(a){function b(a,d){var e,f,g;if(this.element=a,this.version=b.version,this.defaultOptions.previewTemplate=this.defaultOptions.previewTemplate.replace(/\n*/g,""),this.clickableElements=[],this.listeners=[],this.files=[],"string"==typeof this.element&&(this.element=document.querySelector(this.element)),!this.element||null==this.element.nodeType)throw new Error("Invalid dropzone element.");if(this.element.dropzone)throw new Error("Dropzone already attached.");if(b.instances.push(this),this.element.dropzone=this,e=null!=(g=b.optionsForElement(this.element))?g:{},this.options=c({},this.defaultOptions,e,null!=d?d:{}),this.options.forceFallback||!b.isBrowserSupported())return this.options.fallback.call(this);if(null==this.options.url&&(this.options.url=this.element.getAttribute("action")),!this.options.url)throw new Error("No URL provided.");if(this.options.acceptedFiles&&this.options.acceptedMimeTypes)throw new Error("You can't provide both 'acceptedFiles' and 'acceptedMimeTypes'. 'acceptedMimeTypes' is deprecated.");this.options.acceptedMimeTypes&&(this.options.acceptedFiles=this.options.acceptedMimeTypes,delete this.options.acceptedMimeTypes),this.options.method=this.options.method.toUpperCase(),(f=this.getExistingFallback())&&f.parentNode&&f.parentNode.removeChild(f),this.options.previewsContainer!==!1&&(this.previewsContainer=this.options.previewsContainer?b.getElement(this.options.previewsContainer,"previewsContainer"):this.element),this.options.clickable&&(this.clickableElements=this.options.clickable===!0?[this.element]:b.getElements(this.options.clickable,"clickable")),this.init()}var c;return l(b,a),b.prototype.events=["drop","dragstart","dragend","dragenter","dragover","dragleave","addedfile","removedfile","thumbnail","error","errormultiple","processing","processingmultiple","uploadprogress","totaluploadprogress","sending","sendingmultiple","success","successmultiple","canceled","canceledmultiple","complete","completemultiple","reset","maxfilesexceeded","maxfilesreached"],b.prototype.defaultOptions={url:null,method:"post",withCredentials:!1,parallelUploads:2,uploadMultiple:!1,maxFilesize:256,paramName:"file",createImageThumbnails:!0,maxThumbnailFilesize:10,thumbnailWidth:100,thumbnailHeight:100,maxFiles:null,params:{},clickable:!0,ignoreHiddenFiles:!0,acceptedFiles:null,acceptedMimeTypes:null,autoProcessQueue:!0,autoQueue:!0,addRemoveLinks:!1,previewsContainer:null,dictDefaultMessage:"Drop files here to upload",dictFallbackMessage:"Your browser does not support drag'n'drop file uploads.",dictFallbackText:"Please use the fallback form below to upload your files like in the olden days.",dictFileTooBig:"File is too big ({{filesize}}MiB). Max filesize: {{maxFilesize}}MiB.",dictInvalidFileType:"You can't upload files of this type.",dictResponseError:"Server responded with {{statusCode}} code.",dictCancelUpload:"Cancel upload",dictCancelUploadConfirmation:"Are you sure you want to cancel this upload?",dictRemoveFile:"Remove file",dictRemoveFileConfirmation:null,dictMaxFilesExceeded:"You can not upload any more files.",accept:function(a,b){return b()},init:function(){return i},forceFallback:!1,fallback:function(){var a,c,d,e,f,g;for(this.element.className=""+this.element.className+" dz-browser-not-supported",g=this.element.getElementsByTagName("div"),e=0,f=g.length;f>e;e++)a=g[e],/(^| )dz-message($| )/.test(a.className)&&(c=a,a.className="dz-message");return c||(c=b.createElement('<div class="dz-message"><span></span></div>'),this.element.appendChild(c)),d=c.getElementsByTagName("span")[0],d&&(d.textContent=this.options.dictFallbackMessage),this.element.appendChild(this.getFallbackForm())},resize:function(a){var b,c,d;return b={srcX:0,srcY:0,srcWidth:a.width,srcHeight:a.height},c=a.width/a.height,b.optWidth=this.options.thumbnailWidth,b.optHeight=this.options.thumbnailHeight,null==b.optWidth&&null==b.optHeight?(b.optWidth=b.srcWidth,b.optHeight=b.srcHeight):null==b.optWidth?b.optWidth=c*b.optHeight:null==b.optHeight&&(b.optHeight=1/c*b.optWidth),d=b.optWidth/b.optHeight,a.height<b.optHeight||a.width<b.optWidth?(b.trgHeight=b.srcHeight,b.trgWidth=b.srcWidth):c>d?(b.srcHeight=a.height,b.srcWidth=b.srcHeight*d):(b.srcWidth=a.width,b.srcHeight=b.srcWidth/d),b.srcX=(a.width-b.srcWidth)/2,b.srcY=(a.height-b.srcHeight)/2,b},drop:function(){return this.element.classList.remove("dz-drag-hover")},dragstart:i,dragend:function(){return this.element.classList.remove("dz-drag-hover")},dragenter:function(){return this.element.classList.add("dz-drag-hover")},dragover:function(){return this.element.classList.add("dz-drag-hover")},dragleave:function(){return this.element.classList.remove("dz-drag-hover")},paste:i,reset:function(){return this.element.classList.remove("dz-started")},addedfile:function(a){var c,d,e,f,g,h,i,j,k,l,m,n,o;if(this.element===this.previewsContainer&&this.element.classList.add("dz-started"),this.previewsContainer){for(a.previewElement=b.createElement(this.options.previewTemplate.trim()),a.previewTemplate=a.previewElement,this.previewsContainer.appendChild(a.previewElement),l=a.previewElement.querySelectorAll("[data-dz-name]"),f=0,i=l.length;i>f;f++)c=l[f],c.textContent=a.name;for(m=a.previewElement.querySelectorAll("[data-dz-size]"),g=0,j=m.length;j>g;g++)c=m[g],c.innerHTML=this.filesize(a.size);for(this.options.addRemoveLinks&&(a._removeLink=b.createElement('<a class="dz-remove" href="javascript:undefined;" data-dz-remove>'+this.options.dictRemoveFile+"</a>"),a.previewElement.appendChild(a._removeLink)),d=function(c){return function(d){return d.preventDefault(),d.stopPropagation(),a.status===b.UPLOADING?b.confirm(c.options.dictCancelUploadConfirmation,function(){return c.removeFile(a)}):c.options.dictRemoveFileConfirmation?b.confirm(c.options.dictRemoveFileConfirmation,function(){return c.removeFile(a)}):c.removeFile(a)}}(this),n=a.previewElement.querySelectorAll("[data-dz-remove]"),o=[],h=0,k=n.length;k>h;h++)e=n[h],o.push(e.addEventListener("click",d));return o}},removedfile:function(a){var b;return a.previewElement&&null!=(b=a.previewElement)&&b.parentNode.removeChild(a.previewElement),this._updateMaxFilesReachedClass()},thumbnail:function(a,b){var c,d,e,f,g;if(a.previewElement){for(a.previewElement.classList.remove("dz-file-preview"),a.previewElement.classList.add("dz-image-preview"),f=a.previewElement.querySelectorAll("[data-dz-thumbnail]"),g=[],d=0,e=f.length;e>d;d++)c=f[d],c.alt=a.name,g.push(c.src=b);return g}},error:function(a,b){var c,d,e,f,g;if(a.previewElement){for(a.previewElement.classList.add("dz-error"),"String"!=typeof b&&b.error&&(b=b.error),f=a.previewElement.querySelectorAll("[data-dz-errormessage]"),g=[],d=0,e=f.length;e>d;d++)c=f[d],g.push(c.textContent=b);return g}},errormultiple:i,processing:function(a){return a.previewElement&&(a.previewElement.classList.add("dz-processing"),a._removeLink)?a._removeLink.textContent=this.options.dictCancelUpload:void 0},processingmultiple:i,uploadprogress:function(a,b){var c,d,e,f,g;if(a.previewElement){for(f=a.previewElement.querySelectorAll("[data-dz-uploadprogress]"),g=[],d=0,e=f.length;e>d;d++)c=f[d],g.push(c.style.width=""+b+"%");return g}},totaluploadprogress:i,sending:i,sendingmultiple:i,success:function(a){return a.previewElement?a.previewElement.classList.add("dz-success"):void 0},successmultiple:i,canceled:function(a){return this.emit("error",a,"Upload canceled.")},canceledmultiple:i,complete:function(a){return a._removeLink?a._removeLink.textContent=this.options.dictRemoveFile:void 0},completemultiple:i,maxfilesexceeded:i,maxfilesreached:i,previewTemplate:'<div class="dz-preview dz-file-preview">\n  <div class="dz-details">\n    <div class="dz-filename"><span data-dz-name></span></div>\n    <div class="dz-size" data-dz-size></div>\n    <img data-dz-thumbnail />\n  </div>\n  <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>\n  <div class="dz-success-mark"><span>✔</span></div>\n  <div class="dz-error-mark"><span>✘</span></div>\n  <div class="dz-error-message"><span data-dz-errormessage></span></div>\n</div>'},c=function(){var a,b,c,d,e,f,g;for(d=arguments[0],c=2<=arguments.length?m.call(arguments,1):[],f=0,g=c.length;g>f;f++){b=c[f];for(a in b)e=b[a],d[a]=e}return d},b.prototype.getAcceptedFiles=function(){var a,b,c,d,e;for(d=this.files,e=[],b=0,c=d.length;c>b;b++)a=d[b],a.accepted&&e.push(a);return e},b.prototype.getRejectedFiles=function(){var a,b,c,d,e;for(d=this.files,e=[],b=0,c=d.length;c>b;b++)a=d[b],a.accepted||e.push(a);return e},b.prototype.getFilesWithStatus=function(a){var b,c,d,e,f;for(e=this.files,f=[],c=0,d=e.length;d>c;c++)b=e[c],b.status===a&&f.push(b);return f},b.prototype.getQueuedFiles=function(){return this.getFilesWithStatus(b.QUEUED)},b.prototype.getUploadingFiles=function(){return this.getFilesWithStatus(b.UPLOADING)},b.prototype.getActiveFiles=function(){var a,c,d,e,f;for(e=this.files,f=[],c=0,d=e.length;d>c;c++)a=e[c],(a.status===b.UPLOADING||a.status===b.QUEUED)&&f.push(a);return f},b.prototype.init=function(){var a,c,d,e,f,g,h;for("form"===this.element.tagName&&this.element.setAttribute("enctype","multipart/form-data"),this.element.classList.contains("dropzone")&&!this.element.querySelector(".dz-message")&&this.element.appendChild(b.createElement('<div class="dz-default dz-message"><span>'+this.options.dictDefaultMessage+"</span></div>")),this.clickableElements.length&&(d=function(a){return function(){return a.hiddenFileInput&&document.body.removeChild(a.hiddenFileInput),a.hiddenFileInput=document.createElement("input"),a.hiddenFileInput.setAttribute("type","file"),(null==a.options.maxFiles||a.options.maxFiles>1)&&a.hiddenFileInput.setAttribute("multiple","multiple"),a.hiddenFileInput.className="dz-hidden-input",null!=a.options.acceptedFiles&&a.hiddenFileInput.setAttribute("accept",a.options.acceptedFiles),a.hiddenFileInput.style.visibility="hidden",a.hiddenFileInput.style.position="absolute",a.hiddenFileInput.style.top="0",a.hiddenFileInput.style.left="0",a.hiddenFileInput.style.height="0",a.hiddenFileInput.style.width="0",document.body.appendChild(a.hiddenFileInput),a.hiddenFileInput.addEventListener("change",function(){var b,c,e,f;if(c=a.hiddenFileInput.files,c.length)for(e=0,f=c.length;f>e;e++)b=c[e],a.addFile(b);return d()})}}(this))(),this.URL=null!=(g=window.URL)?g:window.webkitURL,h=this.events,e=0,f=h.length;f>e;e++)a=h[e],this.on(a,this.options[a]);return this.on("uploadprogress",function(a){return function(){return a.updateTotalUploadProgress()}}(this)),this.on("removedfile",function(a){return function(){return a.updateTotalUploadProgress()}}(this)),this.on("canceled",function(a){return function(b){return a.emit("complete",b)}}(this)),this.on("complete",function(a){return function(){return 0===a.getUploadingFiles().length&&0===a.getQueuedFiles().length?setTimeout(function(){return a.emit("queuecomplete")},0):void 0}}(this)),c=function(a){return a.stopPropagation(),a.preventDefault?a.preventDefault():a.returnValue=!1},this.listeners=[{element:this.element,events:{dragstart:function(a){return function(b){return a.emit("dragstart",b)}}(this),dragenter:function(a){return function(b){return c(b),a.emit("dragenter",b)}}(this),dragover:function(a){return function(b){var d;try{d=b.dataTransfer.effectAllowed}catch(e){}return b.dataTransfer.dropEffect="move"===d||"linkMove"===d?"move":"copy",c(b),a.emit("dragover",b)}}(this),dragleave:function(a){return function(b){return a.emit("dragleave",b)}}(this),drop:function(a){return function(b){return c(b),a.drop(b)}}(this),dragend:function(a){return function(b){return a.emit("dragend",b)}}(this)}}],this.clickableElements.forEach(function(a){return function(c){return a.listeners.push({element:c,events:{click:function(d){return c!==a.element||d.target===a.element||b.elementInside(d.target,a.element.querySelector(".dz-message"))?a.hiddenFileInput.click():void 0}}})}}(this)),this.enable(),this.options.init.call(this)},b.prototype.destroy=function(){var a;return this.disable(),this.removeAllFiles(!0),(null!=(a=this.hiddenFileInput)?a.parentNode:void 0)&&(this.hiddenFileInput.parentNode.removeChild(this.hiddenFileInput),this.hiddenFileInput=null),delete this.element.dropzone,b.instances.splice(b.instances.indexOf(this),1)},b.prototype.updateTotalUploadProgress=function(){var a,b,c,d,e,f,g,h;if(d=0,c=0,a=this.getActiveFiles(),a.length){for(h=this.getActiveFiles(),f=0,g=h.length;g>f;f++)b=h[f],d+=b.upload.bytesSent,c+=b.upload.total;e=100*d/c}else e=100;return this.emit("totaluploadprogress",e,c,d)},b.prototype._getParamName=function(a){return"function"==typeof this.options.paramName?this.options.paramName(a):""+this.options.paramName+(this.options.uploadMultiple?"["+a+"]":"")},b.prototype.getFallbackForm=function(){var a,c,d,e;return(a=this.getExistingFallback())?a:(d='<div class="dz-fallback">',this.options.dictFallbackText&&(d+="<p>"+this.options.dictFallbackText+"</p>"),d+='<input type="file" name="'+this._getParamName(0)+'" '+(this.options.uploadMultiple?'multiple="multiple"':void 0)+' /><input type="submit" value="Upload!"></div>',c=b.createElement(d),"FORM"!==this.element.tagName?(e=b.createElement('<form action="'+this.options.url+'" enctype="multipart/form-data" method="'+this.options.method+'"></form>'),e.appendChild(c)):(this.element.setAttribute("enctype","multipart/form-data"),this.element.setAttribute("method",this.options.method)),null!=e?e:c)},b.prototype.getExistingFallback=function(){var a,b,c,d,e,f;for(b=function(a){var b,c,d;for(c=0,d=a.length;d>c;c++)if(b=a[c],/(^| )fallback($| )/.test(b.className))return b},f=["div","form"],d=0,e=f.length;e>d;d++)if(c=f[d],a=b(this.element.getElementsByTagName(c)))return a},b.prototype.setupEventListeners=function(){var a,b,c,d,e,f,g;for(f=this.listeners,g=[],d=0,e=f.length;e>d;d++)a=f[d],g.push(function(){var d,e;d=a.events,e=[];for(b in d)c=d[b],e.push(a.element.addEventListener(b,c,!1));return e}());return g},b.prototype.removeEventListeners=function(){var a,b,c,d,e,f,g;for(f=this.listeners,g=[],d=0,e=f.length;e>d;d++)a=f[d],g.push(function(){var d,e;d=a.events,e=[];for(b in d)c=d[b],e.push(a.element.removeEventListener(b,c,!1));return e}());return g},b.prototype.disable=function(){var a,b,c,d,e;for(this.clickableElements.forEach(function(a){return a.classList.remove("dz-clickable")}),this.removeEventListeners(),d=this.files,e=[],b=0,c=d.length;c>b;b++)a=d[b],e.push(this.cancelUpload(a));return e},b.prototype.enable=function(){return this.clickableElements.forEach(function(a){return a.classList.add("dz-clickable")}),this.setupEventListeners()},b.prototype.filesize=function(a){var b;return a>=109951162777.6?(a/=109951162777.6,b="TiB"):a>=107374182.4?(a/=107374182.4,b="GiB"):a>=104857.6?(a/=104857.6,b="MiB"):a>=102.4?(a/=102.4,b="KiB"):(a=10*a,b="b"),"<strong>"+Math.round(a)/10+"</strong> "+b},b.prototype._updateMaxFilesReachedClass=function(){return null!=this.options.maxFiles&&this.getAcceptedFiles().length>=this.options.maxFiles?(this.getAcceptedFiles().length===this.options.maxFiles&&this.emit("maxfilesreached",this.files),this.element.classList.add("dz-max-files-reached")):this.element.classList.remove("dz-max-files-reached")},b.prototype.drop=function(a){var b,c;a.dataTransfer&&(this.emit("drop",a),b=a.dataTransfer.files,b.length&&(c=a.dataTransfer.items,c&&c.length&&null!=c[0].webkitGetAsEntry?this._addFilesFromItems(c):this.handleFiles(b)))},b.prototype.paste=function(a){var b,c;if(null!=(null!=a&&null!=(c=a.clipboardData)?c.items:void 0))return this.emit("paste",a),b=a.clipboardData.items,b.length?this._addFilesFromItems(b):void 0},b.prototype.handleFiles=function(a){var b,c,d,e;for(e=[],c=0,d=a.length;d>c;c++)b=a[c],e.push(this.addFile(b));return e},b.prototype._addFilesFromItems=function(a){var b,c,d,e,f;for(f=[],d=0,e=a.length;e>d;d++)c=a[d],f.push(null!=c.webkitGetAsEntry&&(b=c.webkitGetAsEntry())?b.isFile?this.addFile(c.getAsFile()):b.isDirectory?this._addFilesFromDirectory(b,b.name):void 0:null!=c.getAsFile?null==c.kind||"file"===c.kind?this.addFile(c.getAsFile()):void 0:void 0);return f},b.prototype._addFilesFromDirectory=function(a,b){var c,d;return c=a.createReader(),d=function(a){return function(c){var d,e,f;for(e=0,f=c.length;f>e;e++)d=c[e],d.isFile?d.file(function(c){return a.options.ignoreHiddenFiles&&"."===c.name.substring(0,1)?void 0:(c.fullPath=""+b+"/"+c.name,a.addFile(c))}):d.isDirectory&&a._addFilesFromDirectory(d,""+b+"/"+d.name)}}(this),c.readEntries(d,function(a){return"undefined"!=typeof console&&null!==console&&"function"==typeof console.log?console.log(a):void 0})},b.prototype.accept=function(a,c){return a.size>1024*this.options.maxFilesize*1024?c(this.options.dictFileTooBig.replace("{{filesize}}",Math.round(a.size/1024/10.24)/100).replace("{{maxFilesize}}",this.options.maxFilesize)):b.isValidFile(a,this.options.acceptedFiles)?null!=this.options.maxFiles&&this.getAcceptedFiles().length>=this.options.maxFiles?(c(this.options.dictMaxFilesExceeded.replace("{{maxFiles}}",this.options.maxFiles)),this.emit("maxfilesexceeded",a)):this.options.accept.call(this,a,c):c(this.options.dictInvalidFileType)},b.prototype.addFile=function(a){return a.upload={progress:0,total:a.size,bytesSent:0},this.files.push(a),a.status=b.ADDED,this.emit("addedfile",a),this._enqueueThumbnail(a),this.accept(a,function(b){return function(c){return c?(a.accepted=!1,b._errorProcessing([a],c)):(a.accepted=!0,b.options.autoQueue&&b.enqueueFile(a)),b._updateMaxFilesReachedClass()}}(this))},b.prototype.enqueueFiles=function(a){var b,c,d;for(c=0,d=a.length;d>c;c++)b=a[c],this.enqueueFile(b);return null},b.prototype.enqueueFile=function(a){if(a.status!==b.ADDED||a.accepted!==!0)throw new Error("This file can't be queued because it has already been processed or was rejected.");return a.status=b.QUEUED,this.options.autoProcessQueue?setTimeout(function(a){return function(){return a.processQueue()}}(this),0):void 0},b.prototype._thumbnailQueue=[],b.prototype._processingThumbnail=!1,b.prototype._enqueueThumbnail=function(a){return this.options.createImageThumbnails&&a.type.match(/image.*/)&&a.size<=1024*this.options.maxThumbnailFilesize*1024?(this._thumbnailQueue.push(a),setTimeout(function(a){return function(){return a._processThumbnailQueue()}}(this),0)):void 0},b.prototype._processThumbnailQueue=function(){return this._processingThumbnail||0===this._thumbnailQueue.length?void 0:(this._processingThumbnail=!0,this.createThumbnail(this._thumbnailQueue.shift(),function(a){return function(){return a._processingThumbnail=!1,a._processThumbnailQueue()}}(this)))},b.prototype.removeFile=function(a){return a.status===b.UPLOADING&&this.cancelUpload(a),this.files=j(this.files,a),this.emit("removedfile",a),0===this.files.length?this.emit("reset"):void 0},b.prototype.removeAllFiles=function(a){var c,d,e,f;for(null==a&&(a=!1),f=this.files.slice(),d=0,e=f.length;e>d;d++)c=f[d],(c.status!==b.UPLOADING||a)&&this.removeFile(c);return null},b.prototype.createThumbnail=function(a,b){var c;return c=new FileReader,c.onload=function(d){return function(){var e;return e=document.createElement("img"),e.onload=function(){var c,f,g,i,j,k,l,m;return a.width=e.width,a.height=e.height,g=d.options.resize.call(d,a),null==g.trgWidth&&(g.trgWidth=g.optWidth),null==g.trgHeight&&(g.trgHeight=g.optHeight),c=document.createElement("canvas"),f=c.getContext("2d"),c.width=g.trgWidth,c.height=g.trgHeight,h(f,e,null!=(j=g.srcX)?j:0,null!=(k=g.srcY)?k:0,g.srcWidth,g.srcHeight,null!=(l=g.trgX)?l:0,null!=(m=g.trgY)?m:0,g.trgWidth,g.trgHeight),i=c.toDataURL("image/png"),d.emit("thumbnail",a,i),null!=b?b():void 0},e.src=c.result}}(this),c.readAsDataURL(a)},b.prototype.processQueue=function(){var a,b,c,d;if(b=this.options.parallelUploads,c=this.getUploadingFiles().length,a=c,!(c>=b)&&(d=this.getQueuedFiles(),d.length>0)){if(this.options.uploadMultiple)return this.processFiles(d.slice(0,b-c));for(;b>a;){if(!d.length)return;this.processFile(d.shift()),a++}}},b.prototype.processFile=function(a){return this.processFiles([a])},b.prototype.processFiles=function(a){var c,d,e;for(d=0,e=a.length;e>d;d++)c=a[d],c.processing=!0,c.status=b.UPLOADING,this.emit("processing",c);return this.options.uploadMultiple&&this.emit("processingmultiple",a),this.uploadFiles(a)},b.prototype._getFilesWithXhr=function(a){var b,c;return c=function(){var c,d,e,f;for(e=this.files,f=[],c=0,d=e.length;d>c;c++)b=e[c],b.xhr===a&&f.push(b);return f}.call(this)},b.prototype.cancelUpload=function(a){var c,d,e,f,g,h,i;if(a.status===b.UPLOADING){for(d=this._getFilesWithXhr(a.xhr),e=0,g=d.length;g>e;e++)c=d[e],c.status=b.CANCELED;for(a.xhr.abort(),f=0,h=d.length;h>f;f++)c=d[f],this.emit("canceled",c);this.options.uploadMultiple&&this.emit("canceledmultiple",d)}else((i=a.status)===b.ADDED||i===b.QUEUED)&&(a.status=b.CANCELED,this.emit("canceled",a),this.options.uploadMultiple&&this.emit("canceledmultiple",[a]));return this.options.autoProcessQueue?this.processQueue():void 0},b.prototype.uploadFile=function(a){return this.uploadFiles([a])},b.prototype.uploadFiles=function(a){var d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,x,y,z,A,B,C,D,E,F,G,H,I;for(t=new XMLHttpRequest,u=0,y=a.length;y>u;u++)d=a[u],d.xhr=t;t.open(this.options.method,this.options.url,!0),t.withCredentials=!!this.options.withCredentials,q=null,f=function(b){return function(){var c,e,f;for(f=[],c=0,e=a.length;e>c;c++)d=a[c],f.push(b._errorProcessing(a,q||b.options.dictResponseError.replace("{{statusCode}}",t.status),t));return f}}(this),r=function(b){return function(c){var e,f,g,h,i,j,k,l,m;if(null!=c)for(f=100*c.loaded/c.total,g=0,j=a.length;j>g;g++)d=a[g],d.upload={progress:f,total:c.total,bytesSent:c.loaded};else{for(e=!0,f=100,h=0,k=a.length;k>h;h++)d=a[h],(100!==d.upload.progress||d.upload.bytesSent!==d.upload.total)&&(e=!1),d.upload.progress=f,d.upload.bytesSent=d.upload.total;if(e)return}for(m=[],i=0,l=a.length;l>i;i++)d=a[i],m.push(b.emit("uploadprogress",d,f,d.upload.bytesSent));return m}}(this),t.onload=function(c){return function(d){var e;if(a[0].status!==b.CANCELED&&4===t.readyState){if(q=t.responseText,t.getResponseHeader("content-type")&&~t.getResponseHeader("content-type").indexOf("application/json"))try{q=JSON.parse(q)}catch(g){d=g,q="Invalid JSON response from server."}return r(),200<=(e=t.status)&&300>e?c._finished(a,q,d):f()}}}(this),t.onerror=function(){return function(){return a[0].status!==b.CANCELED?f():void 0}}(this),p=null!=(D=t.upload)?D:t,p.onprogress=r,i={Accept:"application/json","Cache-Control":"no-cache","X-Requested-With":"XMLHttpRequest"},this.options.headers&&c(i,this.options.headers);for(g in i)h=i[g],t.setRequestHeader(g,h);if(e=new FormData,this.options.params){E=this.options.params;for(n in E)s=E[n],e.append(n,s)}for(v=0,z=a.length;z>v;v++)d=a[v],this.emit("sending",d,t,e);if(this.options.uploadMultiple&&this.emit("sendingmultiple",a,t,e),"FORM"===this.element.tagName)for(F=this.element.querySelectorAll("input, textarea, select, button"),w=0,A=F.length;A>w;w++)if(k=F[w],l=k.getAttribute("name"),m=k.getAttribute("type"),"SELECT"===k.tagName&&k.hasAttribute("multiple"))for(G=k.options,x=0,B=G.length;B>x;x++)o=G[x],o.selected&&e.append(l,o.value);else(!m||"checkbox"!==(H=m.toLowerCase())&&"radio"!==H||k.checked)&&e.append(l,k.value);for(j=C=0,I=a.length-1;I>=0?I>=C:C>=I;j=I>=0?++C:--C)e.append(this._getParamName(j),a[j],a[j].name);return t.send(e)},b.prototype._finished=function(a,c,d){var e,f,g;for(f=0,g=a.length;g>f;f++)e=a[f],e.status=b.SUCCESS,this.emit("success",e,c,d),this.emit("complete",e);return this.options.uploadMultiple&&(this.emit("successmultiple",a,c,d),this.emit("completemultiple",a)),this.options.autoProcessQueue?this.processQueue():void 0},b.prototype._errorProcessing=function(a,c,d){var e,f,g;for(f=0,g=a.length;g>f;f++)e=a[f],e.status=b.ERROR,this.emit("error",e,c,d),this.emit("complete",e);return this.options.uploadMultiple&&(this.emit("errormultiple",a,c,d),this.emit("completemultiple",a)),this.options.autoProcessQueue?this.processQueue():void 0},b}(d),b.version="3.10.2",b.options={},b.optionsForElement=function(a){return a.getAttribute("id")?b.options[e(a.getAttribute("id"))]:void 0},b.instances=[],b.forElement=function(a){if("string"==typeof a&&(a=document.querySelector(a)),null==(null!=a?a.dropzone:void 0))throw new Error("No Dropzone found for given element. This is probably because you're trying to access it before Dropzone had the time to initialize. Use the `init` option to setup any additional observers on your Dropzone.");return a.dropzone},b.autoDiscover=!0,b.discover=function(){var a,c,d,e,f,g;for(document.querySelectorAll?d=document.querySelectorAll(".dropzone"):(d=[],a=function(a){var b,c,e,f;for(f=[],c=0,e=a.length;e>c;c++)b=a[c],f.push(/(^| )dropzone($| )/.test(b.className)?d.push(b):void 0);return f},a(document.getElementsByTagName("div")),a(document.getElementsByTagName("form"))),g=[],e=0,f=d.length;f>e;e++)c=d[e],g.push(b.optionsForElement(c)!==!1?new b(c):void 0);return g},b.blacklistedBrowsers=[/opera.*Macintosh.*version\/12/i],b.isBrowserSupported=function(){var a,c,d,e,f;if(a=!0,window.File&&window.FileReader&&window.FileList&&window.Blob&&window.FormData&&document.querySelector)if("classList"in document.createElement("a"))for(f=b.blacklistedBrowsers,d=0,e=f.length;e>d;d++)c=f[d],c.test(navigator.userAgent)&&(a=!1);else a=!1;else a=!1;return a},j=function(a,b){var c,d,e,f;for(f=[],d=0,e=a.length;e>d;d++)c=a[d],c!==b&&f.push(c);return f},e=function(a){return a.replace(/[\-_](\w)/g,function(a){return a.charAt(1).toUpperCase()})},b.createElement=function(a){var b;return b=document.createElement("div"),b.innerHTML=a,b.childNodes[0]},b.elementInside=function(a,b){if(a===b)return!0;for(;a=a.parentNode;)if(a===b)return!0;return!1},b.getElement=function(a,b){var c;if("string"==typeof a?c=document.querySelector(a):null!=a.nodeType&&(c=a),null==c)throw new Error("Invalid `"+b+"` option provided. Please provide a CSS selector or a plain HTML element.");return c},b.getElements=function(a,b){var c,d,e,f,g,h,i,j;if(a instanceof Array){e=[];try{for(f=0,h=a.length;h>f;f++)d=a[f],e.push(this.getElement(d,b))}catch(k){c=k,e=null}}else if("string"==typeof a)for(e=[],j=document.querySelectorAll(a),g=0,i=j.length;i>g;g++)d=j[g],e.push(d);else null!=a.nodeType&&(e=[a]);if(null==e||!e.length)throw new Error("Invalid `"+b+"` option provided. Please provide a CSS selector, a plain HTML element or a list of those.");return e},b.confirm=function(a,b,c){return window.confirm(a)?b():null!=c?c():void 0},b.isValidFile=function(a,b){var c,d,e,f,g;if(!b)return!0;for(b=b.split(","),d=a.type,c=d.replace(/\/.*$/,""),f=0,g=b.length;g>f;f++)if(e=b[f],e=e.trim(),"."===e.charAt(0)){if(-1!==a.name.toLowerCase().indexOf(e.toLowerCase(),a.name.length-e.length))return!0}else if(/\/\*$/.test(e)){if(c===e.replace(/\/.*$/,""))return!0}else if(d===e)return!0;return!1},"undefined"!=typeof jQuery&&null!==jQuery&&(jQuery.fn.dropzone=function(a){return this.each(function(){return new b(this,a)})}),"undefined"!=typeof c&&null!==c?c.exports=b:window.Dropzone=b,b.ADDED="added",b.QUEUED="queued",b.ACCEPTED=b.QUEUED,b.UPLOADING="uploading",b.PROCESSING=b.UPLOADING,b.CANCELED="canceled",b.ERROR="error",b.SUCCESS="success",g=function(a){var b,c,d,e,f,g,h,i,j,k;for(h=a.naturalWidth,g=a.naturalHeight,c=document.createElement("canvas"),c.width=1,c.height=g,d=c.getContext("2d"),d.drawImage(a,0,0),e=d.getImageData(0,0,1,g).data,k=0,f=g,i=g;i>k;)b=e[4*(i-1)+3],0===b?f=i:k=i,i=f+k>>1;return j=i/g,0===j?1:j},h=function(a,b,c,d,e,f,h,i,j,k){var l;return l=g(b),a.drawImage(b,c,d,e,f,h,i,j,k/l)},f=function(a,b){var c,d,e,f,g,h,i,j,k;if(e=!1,k=!0,d=a.document,j=d.documentElement,c=d.addEventListener?"addEventListener":"attachEvent",i=d.addEventListener?"removeEventListener":"detachEvent",h=d.addEventListener?"":"on",f=function(c){return"readystatechange"!==c.type||"complete"===d.readyState?(("load"===c.type?a:d)[i](h+c.type,f,!1),!e&&(e=!0)?b.call(a,c.type||c):void 0):void 0},g=function(){var a;try{j.doScroll("left")}catch(b){return a=b,void setTimeout(g,50)}return f("poll")},"complete"!==d.readyState){if(d.createEventObject&&j.doScroll){try{k=!a.frameElement}catch(l){}k&&g()}return d[c](h+"DOMContentLoaded",f,!1),d[c](h+"readystatechange",f,!1),a[c](h+"load",f,!1)}},b._autoDiscoverFunction=function(){return b.autoDiscover?b.discover():void 0},f(window,b._autoDiscoverFunction)}).call(this)}), true?module.exports=a("dropzone"):"function"==typeof define&&define.amd?define([],function(){return a("dropzone")}):this.Dropzone=a("dropzone")}();
+	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(3)))
+
+/***/ },
+/* 21 */
+/***/ function(module, exports, __webpack_require__) {
+
+	/* WEBPACK VAR INJECTION */(function(_, $) {var tpl = __webpack_require__(22);
 	var bootbox = __webpack_require__(7);
 	var dialog = __webpack_require__(10);
 	var pinyAlert = __webpack_require__(11);
@@ -36468,13 +37869,13 @@ webpackJsonp([0,1],[
 	/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(6), __webpack_require__(3)))
 
 /***/ },
-/* 19 */
+/* 22 */
 /***/ function(module, exports) {
 
 	module.exports = "<!-- Begin: Page Header -->\n<style>\n    .nav-list li{\n        float: left;\n    }\n</style>\n<header id=\"topbar\" class=\"ph10\">\n    <div class=\"topbar-left\">\n        <ul class=\"nav nav-list nav-list-topbar pull-left\">\n            <li>\n                <a href=\"#!/product/classify\">商品分类</a>\n            </li>\n            <li>\n                <a href=\"#!/product/list\">商品列表</a>\n            </li>\n            <li>\n                <a href=\"#!/product/attr\">属性管理</a>\n            </li>\n            <li>\n                <a href=\"#!/product/recommen\">商品推荐</a>\n            </li>\n        </ul>\n    </div>\n    <div class=\"topbar-right hidden-xs hidden-sm\">\n        <a href=\"#!/product/list/add\" id=\"addList\" class=\"btn btn-default btn-sm fw600 ml10\">\n            <span class=\"fa fa-plus pr5\"></span>添加商品\n        </a>\n        <a href=\"javascript:;\" id=\"delList\" class=\"btn btn-default btn-sm fw600 ml10\">\n            <span class=\"fa fa-minus pr5\"></span>删除商品\n        </a>\n        <a href=\"javascript:;\" id=\"editList\" class=\"btn btn-default btn-sm fw600 ml10\">\n            <span class=\"fa fa-edit pr5\"></span>编辑商品\n        </a>\n    </div>\n</header>\n<!-- End: Page Header -->\n\n<!-- Begin: Page Content -->\n<section id=\"content\" class=\"table-layout animated fadeIn\">\n    <div class=\"panel-body\">\n        <div class=\"table-responsive\">\n            <table id=\"list-table\" class=\"table admin-form theme-warning tc-checkbox-1 fs13\">\n                \n            </table>\n        </div>\n    </div>\n</section>\n<!-- End: Page Content -->\n";
 
 /***/ },
-/* 20 */
+/* 23 */
 /***/ function(module, exports) {
 
 	/**

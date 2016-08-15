@@ -19,7 +19,7 @@
     <div class="topbar-left">
         <ul class="nav nav-list nav-list-topbar pull-left">
             <li>
-                <a href="#!/product/classify"><span class="fa fa-angle-left"></span>返回</a>
+                <a href="#!/product/list"><span class="fa fa-angle-left">&nbsp;</span>返回</a>
             </li>
         </ul>
     </div>
@@ -43,6 +43,7 @@
     <div class="panel-heading">
       <span class="panel-title hidden-xs">新增商品</span>
     </div>
+    <form id="addproduct-form">
     <div class="panel-body p20 pb10">
       <div class="tab-content pn br-n admin-form">
           <div class="section row">
@@ -129,11 +130,24 @@
                   <label for="comment" class="field-icon">
                     <i class="fa fa-comments"></i>
                   </label>
-<!--                   <span class="input-footer ">
+                    <!-- <span class="input-footer ">
                     <strong>Hint:</strong>Don't be negative or off topic! just be awesome...</span> -->
                 </label>
               </div>
             </div>
+          </div>
+          
+          <hr class="short alt">
+
+          <div class="section row mbn">
+              <h5 class="micro-header fw600 text-left">
+                  <i class="fa fa-exclamation-circle text-info fa-lg pr10"></i> Full-Width Drag and Drop Uploader 
+              </h5>
+              <form class="dropzone" id="dropZone2" style="height: 490px;">
+                  <div class="fallback">
+                      <input name="file" type="file" multiple />
+                  </div>
+              </form>
           </div>
           <div class="section row mbn">
             <div class="col-sm-8">
@@ -147,7 +161,8 @@
           <!-- end section -->
         </div>
     </div>
+    </form>
   </div>
-
 </div>
+
 <!-- End: Content -->
